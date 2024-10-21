@@ -1,3 +1,63 @@
+local function notify_user(msg, level)
+    level = level or "info" -- Default to "info" level if not specified
+    vim.notify(msg, level, { title = "Mason Setup" })
+end
+
+local function is_windows()
+    return package.config:sub(1, 1) == '\\' -- Check if the OS is Windows
+end
+
+local function is_ubuntu()
+    local handle = io.popen("lsb_release -is") -- Check if the OS is Ubuntu
+    if handle then
+        local result = handle:read("*a")
+        handle:close()
+        return string.find(result, "Ubuntu") ~= nil
+    end
+    return false
+end
+
+local function is_python_installed_windows()
+    local handle = io.popen("python --version 2>&1")
+    if handle then
+        local result = handle:read("*a")
+        handle:close()
+        return string.find(result, "Python") ~= nil
+    end
+    return false
+end
+
+local function is_python_on_path_windows()
+    local handle = io.popen("where python 2>&1") -- 'where' for Windows
+    if handle then
+        local result = handle:read("*a")
+        handle:close()
+        notify_user("PATH check output: " .. result, "info") -- Debug output
+        return result and result ~= ""                       -- Check if result is not empty
+    end
+    return false                                             -- Return false if handle is nil
+end
+
+local function is_python_installed_ubuntu()
+    local handle = io.popen("python3 --version 2>&1")
+    if handle then
+        local result = handle:read("*a")
+        handle:close()
+        return string.find(result, "Python") ~= nil
+    end
+    return false
+end
+
+local function is_python_on_path_ubuntu()
+    local handle = io.popen("which python3 2>&1") -- 'which' for Ubuntu
+    if handle then
+        local result = handle:read("*a")
+        handle:close()
+        return string.find(result, "python3") ~= nil
+    end
+    return false -- Return false if handle is nil
+end
+
 return {
     "williamboman/mason.nvim",
     dependencies = {
@@ -5,26 +65,70 @@ return {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
     config = function()
-        require("mason").setup({
-        ensure_installed =  {
-          "clangd",
-          "omnisharp",
-      }
-    })
+        if is_windows() then
+            if is_python_installed_windows() then
+                if not is_python_on_path_windows() then
+                    notify_user("Python is not added to your PATH. Attempting to add Python to PATH...", "warn")
 
+                    -- Get the path to the current script's directory
+                    local script_dir = debug.getinfo(1, "S").source:match("@?(.*/)")
+
+                    -- Construct the path to the batch script
+                    local batch_script_path = script_dir .. "scripts/windows_python_checks.bat"
+
+                    -- Run the batch script
+                    local result = os.execute(batch_script_path)
+                    if result ~= 0 then
+                        notify_user("Failed to run the batch script to add Python to PATH.", "error")
+                    else
+                        notify_user("Batch script executed successfully. Please restart Neovim.", "info")
+                    end
+                else
+                    notify_user("Python is installed and in your PATH.", "info")
+                end
+            else
+                notify_user("Python should be installed and added to PATH.", "error")
+            end
+        elseif is_ubuntu() then
+            if is_python_installed_ubuntu() then
+                if not is_python_on_path_ubuntu() then
+                    notify_user("Python is not added to your PATH. Please add Python to PATH manually.", "warn")
+                else
+                    notify_user("Python is installed and in your PATH.", "info")
+                end
+            else
+                notify_user("Python should be installed and added to PATH.", "error")
+            end
+        else
+            notify_user("This setup is not on Windows or Ubuntu. Python checks completed.", "info")
+        end
+
+        -- Mason setup
+        require("mason").setup({
+            ensure_installed = {
+                "clangd",
+                "omnisharp",
+                "lua_ls",
+                "pylsp",
+            }
+        })
+
+        -- Mason LSP Config setup
         require("mason-lspconfig").setup({
             automatic_installation = true,
             ensure_installed = {
                 "clangd",
                 "omnisharp",
+                "lua_ls",
+                "pylsp",
             },
         })
 
+        -- Mason Tool Installer setup
         require("mason-tool-installer").setup({
             ensure_installed = {
-                "stylua", -- lua formatter
+                "stylua",
             },
         })
     end,
 }
-
