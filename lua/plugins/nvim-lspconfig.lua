@@ -22,6 +22,12 @@ return {
                     end,
                 })
             end
+
+            -- keybindings for LSP features
+            local opts = { noremap = true, silent = true, buffer = bufnr }
+
+            -- rename keybinding
+            vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
         end
         
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
