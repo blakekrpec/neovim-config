@@ -18,24 +18,27 @@ local function is_ubuntu()
 end
 
 local function is_python_installed_windows()
-    local handle = io.popen("python --version 2>&1")
+    -- Use cmd to check the Python version
+    local handle = io.popen("cmd /c python --version 2>&1")
     if handle then
         local result = handle:read("*a")
         handle:close()
+        -- notify_user("Python check output: " .. result, "info")
         return string.find(result, "Python") ~= nil
     end
     return false
 end
 
 local function is_python_on_path_windows()
-    local handle = io.popen("where python 2>&1") -- 'where' for Windows
+    -- Use cmd to check if Python is in PATH
+    local handle = io.popen("cmd /c where python 2>&1") -- 'where' for Windows
     if handle then
         local result = handle:read("*a")
         handle:close()
-        notify_user("PATH check output: " .. result, "info") -- Debug output
-        return result and result ~= ""                       -- Check if result is not empty
+        -- notify_user("PATH check output: " .. result, "info") -- Debug output
+        return result and result ~= ""
     end
-    return false                                             -- Return false if handle is nil
+    return false
 end
 
 local function is_python_installed_ubuntu()
@@ -83,11 +86,11 @@ return {
                     else
                         notify_user("Batch script executed successfully. Please restart Neovim.", "info")
                     end
-                else
-                    notify_user("Python is installed and in your PATH.", "info")
+                    -- else
+                    -- notify_user("Python is installed and in your PATH.", "info")
                 end
             else
-                notify_user("Python should be installed and added to PATH.", "error")
+                notify_user("Python installation not found should be installed and added to PATH.", "error")
             end
         elseif is_ubuntu() then
             if is_python_installed_ubuntu() then
@@ -96,8 +99,8 @@ return {
                 else
                     notify_user("Python is installed and in your PATH.", "info")
                 end
-            else
-                notify_user("Python should be installed and added to PATH.", "error")
+                -- else
+                -- notify_user("Python should be installed and added to PATH.", "error")
             end
         else
             notify_user("This setup is not on Windows or Ubuntu. Python checks completed.", "info")
