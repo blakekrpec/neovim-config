@@ -71,25 +71,28 @@ return {
         if is_windows() then
             if is_python_installed_windows() then
                 if not is_python_on_path_windows() then
-                    notify_user("Python is installed but not added to PATH. Please add Python to your PATH.", "error")
+                    notify_user("Python is installed but not added to PATH." ..
+                        " Please add Python to your PATH.", "error")
                 end
             else
                 notify_user(
-                    "Python installation not found. Please install Python and add it to your PATH on your Windows system.",
-                    "error")
+                    "Python installation not found. Please install Python " ..
+                    "and add it to your PATH on your Windows system.", "error")
             end
         elseif is_ubuntu() then
             if is_python_installed_ubuntu() then
                 if not is_python_on_path_ubuntu() then
-                    notify_user("Python is installed but not added to PATH. Please add Python to your PATH.", "error")
+                    notify_user("Python is installed but not added to PATH." ..
+                        " Please add Python to your PATH.", "error")
                 end
             else
                 notify_user(
-                    "Python installation not found. Please install Python and add it to your PATH on your Ubuntu system.",
-                    "error")
+                    "Python installation not found. Please install Python" ..
+                    " and add it to your PATH on your Ubuntu system.", "error")
             end
         else
-            notify_user("This setup is not on Windows or Ubuntu. Python checks completed.", "error")
+            notify_user("This setup is not on Windows or Ubuntu. Python" ..
+                " checks completed.", "error")
         end
 
         -- Mason setup

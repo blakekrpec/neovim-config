@@ -32,10 +32,12 @@ map("n", "<leader>gD", '<cmd>lua vim.lsp.buf.declaration()<CR>')
 map("n", "<leader>gd", '<cmd>lua vim.lsp.buf.definition()<CR>')
 -- hover
 map("n", "<leader>K", '<cmd>lua vim.lsp.buf.hover()<CR>')
--- show refs
-map("n", "<leader>gr", '<cmd>lua vim.lsp.buf.references()<CR>')
 -- rename symbol
 map("n", "<leader>rn", ":lua vim.lsp.buf.rename()<CR>")
+-- show refs
+map("n", "<leader>gr", '<cmd>lua vim.lsp.buf.references()<CR>')
+-- switch between cpp and header
+map("n", "<F4>", ':ClangdSwitchSourceHeader<CR>')
 
 -- ---- NeoTree
 map("n", "<leader>e", "<CMD>Neotree toggle<CR>")
