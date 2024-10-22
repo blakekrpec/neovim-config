@@ -15,7 +15,8 @@ return {
             -- format on save
             if client.server_capabilities.documentFormattingProvider then
                 vim.api.nvim_create_autocmd("BufWritePre", {
-                    group = vim.api.nvim_create_augroup("Format", { clear = true }),
+                    group = vim.api.nvim_create_augroup("Format",
+                        { clear = true }),
                     buffer = bufnr,
                     callback = function()
                         vim.lsp.buf.format()
@@ -35,9 +36,10 @@ return {
             end,
             ["clangd"] = function()
                 nvim_lsp["clangd"].setup({
-                    cmd = { "clangd", "--compile-commands-dir=build" },
+                    cmd = { "clangd" },
                     filetypes = { "c", "cpp", "objc", "objcpp" },
-                    root_dir = require('lspconfig/util').root_pattern("compile_commands.json", ".git"),
+                    root_dir = require('lspconfig/util').root_pattern(
+                        "compile_commands.json", ".git"),
                     on_attach = on_attach,
                     capabilities = capabilities,
                 })
