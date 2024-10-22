@@ -1,6 +1,6 @@
 local function notify_user(msg, level)
     level = level or "info" -- Default to "info" level if not specified
-    notify(msg, level, { title = "Mason Setup" })
+    vim.notify(msg, level, { title = "Mason Setup" })
 end
 
 local function is_windows()
