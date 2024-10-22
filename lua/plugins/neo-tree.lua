@@ -18,6 +18,7 @@ return {
                         "*.tmp",
                         "*.log",
                         "*.meta",
+                        "*.asset",
                     },
                 },
             },
