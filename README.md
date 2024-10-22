@@ -1,3 +1,5 @@
+## **Setup**
+
 Clone this repo into `~/.config/` (Ubuntu) or `~/AppData/Local/` (Windows) as `/nvim`
 
 `cd ~/.config`
@@ -10,8 +12,12 @@ or
 
 `git clone git@github.com:blakekrpec/neovim-config.git nvim`
 
-## **Warning**
+## **Trouble Shooting/Notes**
+
 ### **Ubuntu Issues**
+
+#### **Mason not installing python-lsp-server
+When trying to run nvim with my config in a docker container, Mason was failing to install the Python lsp. `:MasonLog` reports things are failing with: `Installation failed for Package(name=python-lsp-server) error=spawn: python3 failed with exit code 1 and signal 0.`. The issue seemed to be missing `python3.X-venv` for the installed version of python. In my case, the docker container contained Python3.10.2, and I needed to `sudo apt install python3.10-venv`.
 
 #### **Symbols showing as diamonds with question mark**
 Even with `nvim-web-devicons` installed, if the font used in the Gnome Terminal running nvim does not have a font installed that contains the symbols, then symbols can be displayed as the diamond with a question mark (meaning the installed font doesn't know how to display them).
