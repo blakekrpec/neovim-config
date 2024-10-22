@@ -11,13 +11,13 @@ return {
         require("neo-tree").setup({
             filesystem = {
                 filtered_items = {
-                    hide_dotfiles = true,  -- Hide dotfiles
-                    hide_gitignored = true,  -- Hide files in .gitignore
-                    never_show = { -- List of files or patterns to ignore
+                    hide_dotfiles = true,   -- Hide dotfiles
+                    hide_gitignored = true, -- Hide files in .gitignore
+                    never_show = {          -- List of files or patterns to ignore
                         ".git",
                         "*.tmp",
                         "*.log",
-                        "*.meta", 
+                        "*.meta",
                     },
                 },
             },
