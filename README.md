@@ -14,9 +14,18 @@ or
 
 ## **Trouble Shooting/Notes**
 
+- [Ubuntu Issues](#ubuntu-issues)
+  - [Mason not installing python-lsp-server](#mason-not-installing-python-lsp-server)
+  - [Symbols showing as diamonds with question mark](#symbols-showing-as-diamonds-with-question-mark)
+- [Windows Issues](#windows-issues)
+  - [Mason not finding Python](#mason-not-finding-python)
+  - [Symbols showing as diamonds with question mark](#symbols-showing-as-diamonds-with-question-mark-1)
+- [ROS2 Issues](#ros2-issues)
+  - [Getting clangd LSP working with ROS2](#getting-clangd-lsp-working-with-ros2)
+
 ### **Ubuntu Issues**
 
-#### **Mason not installing python-lsp-server
+#### **Mason not installing python-lsp-server**
 When trying to run nvim with my config in a docker container, Mason was failing to install the Python lsp. `:MasonLog` reports things are failing with: `Installation failed for Package(name=python-lsp-server) error=spawn: python3 failed with exit code 1 and signal 0.`. The issue seemed to be missing `python3.X-venv` for the installed version of python. In my case, the docker container contained Python3.10.2, and I needed to `sudo apt install python3.10-venv`.
 
 #### **Symbols showing as diamonds with question mark**
@@ -46,3 +55,8 @@ To fix this, install a nerd font on the windows machine:
 * To check if the Nerd Font is installed, open Control Panel and search for "Fonts." Click "View installed fonts." There, you can search for "nerd" to see if any Nerd Font was installed.
 
 * Open Windows Terminal or Windows PowerShell (whichever you use), click the dropdown (v) next to the new tab (+), and click "Settings." Find Defaults -> Font Face, and then select the newly installed font. Restart the terminal/PowerShell.
+
+### **ROS2 Issues**
+#### **Getting clangd LSP working with ROS2**
+* To use the included clangd lsp with ros2 (rclcpp) and other included headers (e.g. opencv2), colcon needs to be told to generate a `compile_commands.json` when building as clang will need this to genearte suggestions for included headers (rclcpp, or others like opencv2).
+`colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=YES`
