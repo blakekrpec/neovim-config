@@ -6,7 +6,7 @@ return {
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    vim.fn["vsnip#anonymous"](args.body)  -- For vsnip users
+                    vim.fn["vsnip#anonymous"](args.body) -- For vsnip users
                 end,
             },
             mapping = {
@@ -26,4 +26,3 @@ return {
         })
     end,
 }
-
