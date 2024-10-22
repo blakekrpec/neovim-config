@@ -4,26 +4,42 @@ local function map(mode, lhs, rhs)
     vim.keymap.set(mode, lhs, rhs, { silent = true })
 end
 
-
--- Save
+-- ---- Genearl Vim Stuff
+-- clear highlights
+map("n", "<Leader>nh", ":nohl<CR>")
+-- decrement number
+map("n", "<Leader>-", "<C-x>")
+-- exit insert mode
+map("i", "jj", "<ESC>")
+-- increment number
+map("n", "<Leader>+", "<C-a>")
+-- save
 map("n", "<leader>w", "<CMD>update<CR>")
-
--- Quit
+-- quit
 map("n", "<leader>q", "<CMD>q<CR>")
 
--- Exit insert mode
-map("i", "jj", "<ESC>")
-
--- NeoTree
-map("n", "<leader>e", "<CMD>Neotree toggle<CR>")
-map("n", "<leader>r", "<CMD>Neotree focus<CR>")
-
--- Rename with lsp
-map("n", "<leader>rn", ":lua vim.lsp.buf.rename()<CR>")
-
--- Comments
+-- ---- Comments
 map("n", "<leader>/", ":lua require('Comment.api').toggle.linewise.current()<CR>")
 map("v", "<leader>/", ":lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>")
 
--- Outline
+-- ---- Lazy
+map("n", "<leader>ls", ":Lazy sync<CR>")
+
+-- ---- LSP
+-- go-to-declaration
+map("n", "<leader>gD", '<cmd>lua vim.lsp.buf.declaration()<CR>')
+-- go-to-definition
+map("n", "<leader>gd", '<cmd>lua vim.lsp.buf.definition()<CR>')
+-- hover
+map("n", "<leader>K", '<cmd>lua vim.lsp.buf.hover()<CR>')
+-- show refs
+map("n", "<leader>gr", '<cmd>lua vim.lsp.buf.references()<CR>')
+-- rename symbol
+map("n", "<leader>rn", ":lua vim.lsp.buf.rename()<CR>")
+
+-- ---- NeoTree
+map("n", "<leader>e", "<CMD>Neotree toggle<CR>")
+map("n", "<leader>r", "<CMD>Neotree focus<CR>")
+
+-- ---- Outline
 map("n", "<leader>o", "<CMD>Outline<CR>")

@@ -71,39 +71,25 @@ return {
         if is_windows() then
             if is_python_installed_windows() then
                 if not is_python_on_path_windows() then
-                    notify_user("Python is not added to your PATH. Attempting to add Python to PATH...", "warn")
-
-                    -- Get the path to the current script's directory
-                    local script_dir = debug.getinfo(1, "S").source:match("@?(.*/)")
-
-                    -- Construct the path to the batch script
-                    local batch_script_path = script_dir .. "scripts/windows_python_checks.bat"
-
-                    -- Run the batch script
-                    local result = os.execute(batch_script_path)
-                    if result ~= 0 then
-                        notify_user("Failed to run the batch script to add Python to PATH.", "error")
-                    else
-                        notify_user("Batch script executed successfully. Please restart Neo.", "info")
-                    end
-                    -- else
-                    -- notify_user("Python is installed and in your PATH.", "info")
+                    notify_user("Python is installed but not added to PATH. Please add Python to your PATH.", "error")
                 end
             else
-                notify_user("Python installation not found should be installed and added to PATH.", "error")
+                notify_user(
+                    "Python installation not found. Please install Python and add it to your PATH on your Windows system.",
+                    "error")
             end
         elseif is_ubuntu() then
             if is_python_installed_ubuntu() then
                 if not is_python_on_path_ubuntu() then
-                    notify_user("Python is not added to your PATH. Please add Python to PATH manually.", "warn")
-                else
-                    notify_user("Python is installed and in your PATH.", "info")
+                    notify_user("Python is installed but not added to PATH. Please add Python to your PATH.", "error")
                 end
-                -- else
-                -- notify_user("Python should be installed and added to PATH.", "error")
+            else
+                notify_user(
+                    "Python installation not found. Please install Python and add it to your PATH on your Ubuntu system.",
+                    "error")
             end
         else
-            notify_user("This setup is not on Windows or Ubuntu. Python checks completed.", "info")
+            notify_user("This setup is not on Windows or Ubuntu. Python checks completed.", "error")
         end
 
         -- Mason setup
