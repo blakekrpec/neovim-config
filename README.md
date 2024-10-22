@@ -25,13 +25,6 @@ sudo mv nvim-linux64 /usr/local/bin/
 sudo ln -s /usr/local/bin/nvim-linux64/bin/nvim /usr/local/bin/nvim
 rm nvim-linux64.tar.gz
 ```
-
-* Add bash alias:
-```
-echo "alias vim='nvim'" >> ~/.bashrc
-source ~/.bashrc
-```
-
 * Verify installation:
 ```
 nvim --version
