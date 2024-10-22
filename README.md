@@ -34,7 +34,7 @@ To fix this, install a nerd font on the ubuntu machine:
 ### **Windows Issues**
 
 #### **Mason not finding Python**
-Vim is picky about python on windows. Don't install python from the windows store, and if you have installed python from the Windows Store, uninstall it and remove any lingering python .exes in `C:\<user>AppData\Local\Microsoft\WindowsApps`. Instead, install python from [the official python page](https://www.python.org/downloads/), making sure to select the option to "Add Python to PATH" during installation.
+Vim is picky about python on windows. Don't install python from the windows store, and if you have installed python from the Windows Store, uninstall it and remove any lingering python .exes in `C:\<user>\AppData\Local\Microsoft\WindowsApps`. Instead, install python from [the official python page](https://www.python.org/downloads/), making sure to select the option to "Add Python to PATH" during installation.
 
 #### **Symbols showing as diamonds with question mark**
 Even with `nvim-web-devicons` installed, if the font used in the Windows Terminal, or Windows Powershell, running nvim does not have a font installed that contains the symbols, then symbols can be displayed as the diamond with a question mark (meaning the installed font doesn't know how to display them).
