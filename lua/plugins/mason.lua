@@ -1,6 +1,6 @@
 local function notify_user(msg, level)
     level = level or "info" -- Default to "info" level if not specified
-    vim.notify(msg, level, { title = "Mason Setup" })
+    notify(msg, level, { title = "Mason Setup" })
 end
 
 local function is_windows()
@@ -84,7 +84,7 @@ return {
                     if result ~= 0 then
                         notify_user("Failed to run the batch script to add Python to PATH.", "error")
                     else
-                        notify_user("Batch script executed successfully. Please restart Neovim.", "info")
+                        notify_user("Batch script executed successfully. Please restart Neo.", "info")
                     end
                     -- else
                     -- notify_user("Python is installed and in your PATH.", "info")
