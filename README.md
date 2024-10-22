@@ -15,7 +15,7 @@ or
 ## **Trouble Shooting/Notes**
 
 - [Ubuntu Issues](#ubuntu-issues)
-  - [Mason not installing python-lsp-server](#mason-not-installing-python-lsp-server)
+  - [Mason not installing pylsp](#mason-not-installing-pylsp)
   - [Symbols showing as diamonds with question mark](#symbols-showing-as-diamonds-with-question-mark)
 - [Windows Issues](#windows-issues)
   - [Mason not finding Python](#mason-not-finding-python)
@@ -25,7 +25,7 @@ or
 
 ### **Ubuntu Issues**
 
-#### **Mason not installing python-lsp-server**
+#### **Mason not installing pylsp**
 When trying to run nvim with my config in a docker container, Mason was failing to install the Python lsp. `:MasonLog` reports things are failing with: `Installation failed for Package(name=python-lsp-server) error=spawn: python3 failed with exit code 1 and signal 0.`. The issue seemed to be missing `python3.X-venv` for the installed version of python. In my case, the docker container contained Python3.10.2, and I needed to `sudo apt install python3.10-venv`.
 
 #### **Symbols showing as diamonds with question mark**
