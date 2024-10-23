@@ -14,9 +14,7 @@
 
 #### **Ubuntu**
 
-* Download Neovim:
-1. Visit the [Neovim GitHub Releases](https://github.com/neovim/neovim/releases).
-2. Download the `nvim-linux64.tar.gz` file from the latest release.
+* Download Neovim (`nvim-linux64.tar.gz`) from [Neovim GitHub Releases](https://github.com/neovim/neovim/releases).
 
 * Extract and Install:
 ```bash
@@ -25,13 +23,6 @@ sudo mv nvim-linux64 /usr/local/bin/
 sudo ln -s /usr/local/bin/nvim-linux64/bin/nvim /usr/local/bin/nvim
 rm nvim-linux64.tar.gz
 ```
-
-* Add bash alias:
-```
-echo "alias vim='nvim'" >> ~/.bashrc
-source ~/.bashrc
-```
-
 * Verify installation:
 ```
 nvim --version
@@ -81,6 +72,7 @@ Even with `nvim-web-devicons` installed, if the font used in the Gnome Terminal 
 To fix this, install a Nerd Font on the ubuntu machine:
 * Download a Nerd Font: `wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/0xProto.tar.xz` (update version as desired).
 * Extract the font: `sudo tar -xf 0xProto.tar.xz -C /usr/share/fonts/`
+* Remove the tarball: `rm 0xProto.tar.xz`
 * Set permissions: `sudo chmod 644 /usr/share/fonts/0xProto*`
 * Update the font cache: `sudo fc-cache -fv`
 * Close all open terminals.
