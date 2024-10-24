@@ -120,3 +120,15 @@ This will open a process picker to chose the Unity process
     * Step over or step into functions with `:lua require('dap').step_over()` and `:lua require('dap').step_into()`.
 * UI
     * Use DAP UI by opening panels with `:lua require("dapui").open()` to view variables, stacks, breakpoints, etc.
+
+
+
+WIP:
+
+when I run this I first get:
+
+C:\Program Files\debuggers\netcoredbg\netcoredbg.exe exited with code: 1         
+
+then if I press enter I get:
+
+Debug adapter didn't respond. Either the adapter is slow (then wait and ignore this) or there is a problem with your adapter or coreclr configuration. Check the logs for errors (:help dap.set_log_level)
