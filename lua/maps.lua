@@ -45,3 +45,6 @@ map("n", "<leader>r", "<CMD>Neotree focus<CR>")
 
 -- ---- Outline
 map("n", "<leader>o", "<CMD>Outline<CR>")
+
+-- ---- ToggleTerm
+map("n", "<leader>tt", "<cmd>ToggleTerm<CR>")
