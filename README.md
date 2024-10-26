@@ -54,6 +54,7 @@ Open a terminal on Ubuntu, or a Windows Powershell on Windows and enter `nvim`. 
 ## **Trouble Shooting/Notes**
 
 - [Setting up Unity Debugging](docs/UNITY_DEBUG.md)
+- [Setting up Python Debugging](docs/PYTHON_DEBUGGING.md)
 - [Symbols Showing as Diamonds with ?](docs/NERD_FONT.md)
 - [Mason Not Installing pylsp on Ubuntu ](docs/PYLSP_UBUNTU_ISSUE.md)
 - [Mason not finding Python on Windows](docs/MASON_PYTHON_WINDOWS.md)
