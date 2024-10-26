@@ -6,6 +6,7 @@ return {
     },
     config = function()
         local dap = require('dap')
+        dap.set_log_level('TRACE')
         local dapui = require('dapui')
         local unity = require('unity')
 
@@ -57,7 +58,7 @@ return {
 
         dap.adapters.python       = {
             type = 'executable',
-            command = 'python',         -- Use 'python' to rely on PATH
+            command = vim.fn.stdpath('data') .. '/mason/packages/debugpy/venv/Scripts/python', -- Path to Mason's Python for debugpy
             args = { '-m', 'debugpy.adapter' },
         }
 
@@ -68,18 +69,9 @@ return {
                 name = 'Launch File',
                 program = "${file}", -- This will launch the current file
                 pythonPath = function()
-                    return 'python'  -- Use 'python' to find the executable in PATH
+                    return vim.fn.stdpath('data') ..
+                        '/mason/packages/debugpy/venv/Scripts/python' -- Path to Mason's Python for debugpy
                 end,
-            },
-            {
-                type = 'python',
-                request = 'attach',
-                name = 'Attach to Process',
-                connect = {
-                    host = '127.0.0.1',
-                    port = 5678, -- Adjust if you're using a different port
-                },
-                mode = 'remote',
             },
         }
     end
