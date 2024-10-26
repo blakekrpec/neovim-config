@@ -13,7 +13,7 @@ local function find_vstuc()
 end
 
 -- Finds unity instance to attach to
-local function find_probe()
+function M.find_probe()
     local vstuc_path = vim.fn.fnameescape(vim.fn.stdpath('data') .. '/vstuc/extension/bin')
     local system_obj = vim.system({ 'dotnet', vstuc_path .. '/UnityAttachProbe.dll' }, { text = true })
     local probe_result = system_obj:wait(2000).stdout
@@ -36,7 +36,7 @@ end
 
 -- Send requests via UnityAttachProbe
 local function request(tbl)
-    local probe = find_probe()
+    local probe = M.find_probe()
     if probe == nil then
         return
     end
