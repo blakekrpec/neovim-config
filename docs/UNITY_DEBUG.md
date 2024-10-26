@@ -36,7 +36,7 @@ cd ~/AppData/Local/nvim-data
 cd ~/.config/nvim-data
 ```
 
-Once there, edit [session.lua](https://github.com/mfussenegger/nvim-dap/blob/90616ae6ae40053103dc66872886fc26b94c70c8/lua/dap/session.lua#L995) (line 992 at time of writing) to include filterOptions for`setExceptionBreakpoint`. `seesion.lua is at` nvim-data/lazy/nvim-dap/lua/dap/session.lua`.
+Once there, edit [session.lua](https://github.com/mfussenegger/nvim-dap/blob/90616ae6ae40053103dc66872886fc26b94c70c8/lua/dap/session.lua#L995) (line 992 at time of writing) to include filterOptions for`setExceptionBreakpoint`. `seesion.lua` is at `nvim-data/lazy/nvim-dap/lua/dap/session.lua`.
 
 Change
 ```
