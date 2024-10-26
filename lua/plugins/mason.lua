@@ -102,6 +102,7 @@ return {
                 "omnisharp",
                 "lua_ls",
                 "pylsp",
+                "debugpy",
             }
         })
 
@@ -120,6 +121,7 @@ return {
         require("mason-tool-installer").setup({
             ensure_installed = {
                 "stylua",
+                "debugpy",
             },
         })
     end,
