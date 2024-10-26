@@ -45,6 +45,7 @@ Clone this repo into `~/.config/` (Ubuntu) or `~/AppData/Local/` (Windows) as `/
 #### **Windows**
 
 `cd ~/AppData/Local/`
+
 `git clone git@github.com:blakekrpec/neovim-config.git nvim`
 
 ### **Open Neovim**
