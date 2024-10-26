@@ -7,6 +7,7 @@ return {
     config = function()
         local dap = require('dap')
         local dapui = require('dapui')
+        local unity = require('unity')
 
         dapui.setup()
         vim.keymap.set('n', '<F5>', function()
@@ -39,26 +40,12 @@ return {
                     end
                 end
             end,
+
             endPoint = function()
-                local system_obj = vim.system({ 'dotnet', vstuc_path .. '/UnityAttachProbe.dll' }, { text = true })
-                local probe_result = system_obj:wait(2000).stdout
-                if probe_result == nil or #probe_result == 0 then
-                    print('No endpoint found, is unity running?')
-                    return ''
-                end
-                for json in vim.gsplit(probe_result, '\n') do
-                    if json ~= '' then
-                        local probe = vim.json.decode(json)
-                        for _, p in pairs(probe) do
-                            if p.isBackground == false then
-                                return p.address .. ':' .. p.debuggerPort
-                            end
-                        end
-                    end
-                end
-                return ''
+                return unity.find_probe() and unity.find_probe().address .. ':' .. unity.find_probe().debuggerPort or ''
             end
         }
+
         dap.adapters.vstuc    = {
             type = 'executable',
             command = 'dotnet',
