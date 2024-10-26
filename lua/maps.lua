@@ -22,6 +22,8 @@ map("n", "<leader>q", "<CMD>q<CR>")
 map("n", "<leader>/", ":lua require('Comment.api').toggle.linewise.current()<CR>")
 map("v", "<leader>/", ":lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>")
 
+-- ---- Debug
+
 -- ---- Lazy
 map("n", "<leader>ls", ":Lazy sync<CR>")
 
@@ -47,4 +49,4 @@ map("n", "<leader>r", "<CMD>Neotree focus<CR>")
 map("n", "<leader>o", "<CMD>Outline<CR>")
 
 -- ---- ToggleTerm
-map("n", "<leader>tt", "<cmd>ToggleTerm<CR>")
+map("n", "<leader>t", "<cmd>ToggleTerm<CR>")
