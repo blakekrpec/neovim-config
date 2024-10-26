@@ -1,6 +1,6 @@
-Debugging Unity with Neovim is not straight forward, and requires a couple of dlls from Visual Studio Tools for Unity (vstuc). `unity.lua` expects these files in the `nvim-data`. On Windows `nvim-data` is at `~/AppData/Local/nvim-data`, and on Ubuntu its at `~/.local/share/nvim`. It is currently required to manually download and extract these dlls into your `nvim-data`.
+Debugging Unity with Neovim is not straight forward, and requires a couple of dlls from Visual Studio Tools for Unity (vstuc). `unity.lua` expects these files in the `nvim-data`. On Windows `nvim-data` is at `~/AppData/Local/nvim-data`, and on Ubuntu its at `~/.local/share/nvim`. When using this repo, it is currently required to manually download and extract these dlls into your `nvim-data`.
 
-The new Visual Studio Tools for Unity also adds filter optionsto DAP's `setExceptionBreakpoint`, meaning one of `nvim-dap`s `.lua` files must be modified to include these. Make sure you open neovim at least once so it installs nvim-dap into your `nvim-data` directory.
+The new Visual Studio Tools for Unity also adds filterOptionsto DAP's `setExceptionBreakpoint`, meaning one of `nvim-dap`s `.lua` files must be modified to include these. Make sure you open neovim at least once so it installs nvim-dap into your `nvim-data` directory.
 
 ## Downlaod vstuc
 
