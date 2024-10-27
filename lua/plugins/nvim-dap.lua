@@ -6,7 +6,6 @@ return {
     },
     config = function()
         local dap = require('dap')
-        dap.set_log_level('TRACE')
         local dapui = require('dapui')
         local unity = require('unity')
 
@@ -47,6 +46,8 @@ return {
             end
         }
 
+        dap.configurations.cs     = { vstuc_opts }
+
         dap.adapters.vstuc        = {
             type = 'executable',
             command = 'dotnet',
@@ -54,11 +55,10 @@ return {
             name = 'Attach to Unity',
         }
 
-        dap.configurations.cs     = { vstuc_opts }
-
+        -- Python debug
         dap.adapters.python       = {
             type = 'executable',
-            command = vim.fn.stdpath('data') .. '/mason/packages/debugpy/venv/Scripts/python', -- Path to Mason's Python for debugpy
+            command = vim.fn.stdpath('data') .. '/mason/packages/debugpy/venv/Scripts/python', -- Path to Mason's python for debugpy
             args = { '-m', 'debugpy.adapter' },
         }
 
@@ -67,12 +67,61 @@ return {
                 type = 'python',
                 request = 'launch',
                 name = 'Launch File',
-                program = "${file}", -- This will launch the current file
+                program = "${file}",
                 pythonPath = function()
                     return vim.fn.stdpath('data') ..
-                        '/mason/packages/debugpy/venv/Scripts/python' -- Path to Mason's Python for debugpy
+                        '/mason/packages/debugpy/venv/Scripts/python' -- Path to Mason's python for debugpy
                 end,
             },
+            {
+                type = 'python',
+                request = 'attach',
+                name = 'Attach to Process',
+                connect = {
+                    host = '127.0.0.1',
+                    port = 5678,
+                },
+                mode = 'remote',
+                pythonPath = function()
+                    return vim.fn.stdpath('data') ..
+                        '/mason/packages/debugpy/venv/Scripts/python' -- Path to Mason's python for debugpy
+                end,
+            },
+        }
+
+        -- C++ debug
+        dap.configurations.cpp    = {
+            {
+                name = 'Launch File',
+                type = 'codelldb',
+                request = 'launch',
+                program = function()
+                    return vim.fn.input('Path to executable: ',
+                        vim.fn.getcwd() .. '/', 'file')
+                end,
+                cwd = vim.fn.getcwd(),
+                stopOnEntry = false,
+                args = {},
+            },
+            {
+                name = 'Attach to C++ Process',
+                type = 'codelldb',
+                request = 'attach',
+                processId = function()
+                    return vim.fn.input('Process ID: ')
+                end,
+                cwd = vim.fn.getcwd(),
+                args = {},
+            },
+        }
+
+        dap.adapters.codelldb     = {
+            type = "server",
+            port = "${port}",
+            executable = {
+                command = vim.fn.stdpath('data') .. '/mason/packages/codelldb/extension/adapter/codelldb', -- path to codelldb
+                args = { "--port", "${port}" }
+            }
         }
     end
 }
