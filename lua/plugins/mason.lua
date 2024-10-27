@@ -99,6 +99,7 @@ return {
         require("mason").setup({
             ensure_installed = {
                 "clangd",
+                "codelldb",
                 "omnisharp",
                 "lua_ls",
                 "pylsp",
@@ -120,6 +121,7 @@ return {
         -- Mason Tool Installer setup
         require("mason-tool-installer").setup({
             ensure_installed = {
+                "codelldb",
                 "stylua",
                 "debugpy",
             },
