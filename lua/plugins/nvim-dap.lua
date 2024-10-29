@@ -1,5 +1,6 @@
 return {
-    'mfussenegger/nvim-dap',
+    'blakekrpec/nvim-dap',
+    branch = 'add-filterOptions',
     dependencies = {
         'rcarriga/nvim-dap-ui',
         'nvim-neotest/nvim-nio',
