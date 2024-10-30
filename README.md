@@ -57,4 +57,4 @@ Open a terminal on Ubuntu, or a Windows Powershell on Windows and enter `nvim`. 
 - [Symbols Showing as Diamonds with ?](docs/NERD_FONT.md)
 - [Mason Not Installing pylsp on Ubuntu ](docs/PYLSP_UBUNTU_ISSUE.md)
 - [Mason not finding Python on Windows](docs/MASON_PYTHON_WINDOWS.md)
-- [Getting clangd LSP working with ROS2](docs/ROS2_CLANGD)
+- [Getting clangd LSP working with ROS2](docs/ROS2_CLANGD.md)
