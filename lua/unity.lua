@@ -34,7 +34,7 @@ function M.find_probe()
     return nil
 end
 
--- Send requests via UnityAttachProbe
+-- Send requests to NeovimForUnity Unity package
 local function request(tbl)
     local probe = M.find_probe()
     if probe == nil then
