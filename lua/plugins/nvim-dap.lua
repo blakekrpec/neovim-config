@@ -27,24 +27,8 @@ return {
             request = 'attach',
             name = 'Attach to Unity',
             logFile = vim.fs.joinpath(vim.fn.stdpath('data')) .. '/vstuc.log',
-            projectPath = function()
-                local path = vim.fn.expand('%:p')
-                while true do
-                    local new_path = vim.fn.fnamemodify(path, ':h')
-                    if new_path == path then
-                        return ''
-                    end
-                    path = new_path
-                    local assets = vim.fn.glob(path .. '/Assets')
-                    if assets ~= '' then
-                        return path
-                    end
-                end
-            end,
-
-            endPoint = function()
-                return unity.find_probe() and unity.find_probe().address .. ':' .. unity.find_probe().debuggerPort or ''
-            end
+            projectPath = unity.find_project_path(),
+            endPoint = unity.find_probe()
         }
 
         dap.configurations.cs     = { vstuc_opts }
