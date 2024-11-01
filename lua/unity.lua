@@ -50,22 +50,6 @@ function M.find_project_path()
     end
 end
 
--- Finds the project path
-function M.find_project_path()
-    local path = vim.fn.expand('%:p')
-    while true do
-        local new_path = vim.fn.fnamemodify(path, ':h')
-        if new_path == path then
-            return ''
-        end
-        path = new_path
-        local assets = vim.fn.glob(path .. '/Assets')
-        if assets ~= '' then
-            return path
-        end
-    end
-end
-
 -- Send requests to NeovimForUnity Unity package
 local function request(tbl)
     local probe = M.find_probe()
