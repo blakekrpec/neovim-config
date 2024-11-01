@@ -3,7 +3,7 @@ return {
     dependencies = {
         {
             "blakekrpec/nvim-dap",
-            branch = "add-filterOptions"
+            branch = "add-optional-args"
         },
         "nvim-neotest/nvim-nio" },
 

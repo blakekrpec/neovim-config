@@ -1,6 +1,6 @@
 return {
     'blakekrpec/nvim-dap',
-    branch = 'add-filterOptions',
+    branch = 'add-optional-args',
     dependencies = {
         'rcarriga/nvim-dap-ui',
         'nvim-neotest/nvim-nio',
@@ -21,7 +21,8 @@ return {
         end)
 
         -- Unity debug
-        local vstuc_path                            = vim.fn.fnameescape(vim.fn.stdpath('data') .. '/vstuc/extension/bin')
+        local vstuc_path                            = vim.fn.fnameescape(vim.fn.stdpath('data') ..
+            '/vstuc/extension/bin')
         local vstuc_opts                            = {
             type = 'vstuc',
             request = 'attach',
