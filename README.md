@@ -14,10 +14,9 @@
 
 #### **Ubuntu**
 
-* Download Neovim (`nvim-linux64.tar.gz`) from [Neovim GitHub Releases](https://github.com/neovim/neovim/releases).
-
-* Extract and Install:
+* Download Neovim, and Extract:
 ```bash
+curl -LO "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
 tar -xzf nvim-linux64.tar.gz
 sudo mv nvim-linux64 /usr/local/bin/
 sudo ln -s /usr/local/bin/nvim-linux64/bin/nvim /usr/local/bin/nvim
