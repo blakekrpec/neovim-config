@@ -99,11 +99,12 @@ return {
         require("mason").setup({
             ensure_installed = {
                 "clangd",
+                "cmake",
                 "codelldb",
-                "omnisharp",
-                "lua_ls",
-                "pylsp",
                 "debugpy",
+                "lua_ls",
+                "omnisharp",
+                "pylsp",
             }
         })
 
@@ -112,8 +113,9 @@ return {
             automatic_installation = true,
             ensure_installed = {
                 "clangd",
-                "omnisharp",
+                "cmake",
                 "lua_ls",
+                "omnisharp",
                 "pylsp",
             },
         })
@@ -121,9 +123,10 @@ return {
         -- Mason Tool Installer setup
         require("mason-tool-installer").setup({
             ensure_installed = {
+                "clangd",
+                "debugpy",
                 "codelldb",
                 "stylua",
-                "debugpy",
             },
         })
     end,
