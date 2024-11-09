@@ -103,6 +103,7 @@ return {
                 "codelldb",
                 "debugpy",
                 "lua_ls",
+                "marksman",
                 "omnisharp",
                 "pylsp",
             }
@@ -115,6 +116,7 @@ return {
                 "clangd",
                 "cmake",
                 "lua_ls",
+                "marksman",
                 "omnisharp",
                 "pylsp",
             },
