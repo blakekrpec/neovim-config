@@ -19,6 +19,7 @@ return
                 "%.tmp$",
                 "%.asset$",
                 "Library\\.*", -- Match 'Library' at any point in the path (Windows style)
+                "Build\\.*",   -- Match 'Library' at any point in the path (Windows style)
                 "__pycache\\", -- Windows style path
                 "%.bin$",
                 "%.png$",
@@ -32,6 +33,7 @@ return
                 "%.asset$",
                 "%.tmp$",
                 "Library/.*", -- Match 'Library' at any point in the path (Unix style)
+                "Build/.*",   -- Match 'Library' at any point in the path (Unix style)
                 "__pycache/", -- Unix style path
                 "%.bin$",
                 "%.png$",
@@ -66,7 +68,7 @@ return
                 {
                     prompt_title = "< NVim Config >",
                     cwd = nvim_config_path, -- Set cwd based on platform
-                    hidden = false,     -- Exclude hidden files
+                    hidden = false,         -- Exclude hidden files
                 })
         end, { desc = "Fuzzy find Neovim config files" })
     end, -- Ensure this 'end' closes the 'function'
