@@ -40,7 +40,7 @@ rm vstuc.vsix
 
 ## 2) Fixing nvim-dap
 
-The new Visual Studio Tools for Unity requires filterOptions be provided for DAP's `setExceptionBreakpoint`, meaning one of `nvim-dap`'s `.lua` files must be modified to include these. To get these changes, point Lazy to use blakekrpec's fork of `nvim-dap`, branch `add-filterOptions`. See the following files in this repo where this change was made: [nvim-dap.lua](../lua/plugins/nvim-dap.lua), [nvim-dap-ui.lua](../lua/plugins/nvim-dap-ui.lua), [nvim-dap-virtual-text.lua](../lua/plugins/nvim-dap-virtual-text.lua) . Note, it is slightly different in `nvim-dap.lua` compared to the others.
+The new Visual Studio Tools for Unity requires filterOptions be provided for DAP's `setExceptionBreakpoint`, meaning one of `nvim-dap`'s `.lua` files must be modified to include these. To get these changes, point Lazy to use blakekrpec's fork of `nvim-dap`, branch `add-optional-args`. See the following files in this repo where this change was made: [nvim-dap.lua](../lua/plugins/nvim-dap.lua), [nvim-dap-ui.lua](../lua/plugins/nvim-dap-ui.lua), [nvim-dap-virtual-text.lua](../lua/plugins/nvim-dap-virtual-text.lua) . Note, it is slightly different in `nvim-dap.lua` compared to the others.
 
 ## 3) Add `unity.lua`
 
