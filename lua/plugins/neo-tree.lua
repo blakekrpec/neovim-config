@@ -22,10 +22,15 @@ return {
                         "*.asset",
                     },
                 },
+                follow_current_file = {
+                    enabled = true,          -- Focuses file in the active buffer.
+                    leave_dirs_open = false, -- Closes auto expanded dirs.
+                },
             },
             buffers = {
                 use_icons = true,
             },
+            -- Close Neotree if its the last window open.
             close_if_last_window = true,
             -- Close Neotree on "file_open_requested".
             event_handlers = {
