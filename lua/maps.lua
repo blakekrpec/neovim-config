@@ -42,11 +42,11 @@ map("n", "<leader>gr", '<cmd>lua vim.lsp.buf.references()<CR>')
 map("n", "<F4>", ':ClangdSwitchSourceHeader<CR>')
 
 -- ---- NeoTree
-map("n", "<leader>e", "<CMD>Neotree toggle<CR>")
-map("n", "<leader>r", "<CMD>Neotree focus<CR>")
+map("n", "<leader>nf", "<CMD>Neotree toggle filesystem<CR>")
+map("n", "<leader>nb", "<CMD>Neotree toggle buffers<CR>")
 
 -- ---- Outline
 map("n", "<leader>o", "<CMD>Outline<CR>")
 
 -- ---- ToggleTerm
-map("n", "<leader>t", "<cmd>ToggleTerm<CR>")
+map("n", "<leader>ty", "<cmd>ToggleTerm<CR>")
