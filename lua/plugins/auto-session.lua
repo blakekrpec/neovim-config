@@ -7,7 +7,7 @@ return {
 
     lazy = false,
     opts = {
-        supressed_dirs = { '~/Downloads' },
+        suppressed_dirs = { '~/Downloads' },
         auto_save = true,
         auto_restore = true,
         auto_create = true,

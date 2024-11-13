@@ -29,6 +29,11 @@ return {
             },
             buffers = {
                 use_icons = true,
+                follow_current_file = {
+                    enabled = true,          -- Focuses file in the active buffer.
+                    leave_dirs_open = false, -- Closes auto expanded dirs.
+                },
+                show_unloaded = true,
             },
             -- Close Neotree if its the last window open.
             close_if_last_window = true,
