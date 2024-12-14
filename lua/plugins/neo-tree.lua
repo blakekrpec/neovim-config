@@ -45,6 +45,19 @@ return {
                         require("neo-tree.command").execute({ action = "close" })
                     end
                 },
+                -- Close Outline if open when neotree is openeing. Otherwise neotre
+                -- will open files in Outline window if neotree was opened from
+                -- the outline window.
+                {
+                    event = "neo_tree_window_before_open",
+                    handler = function()
+                        for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                            if vim.bo[buf].filetype == "Outline" then
+                                vim.api.nvim_buf_delete(buf, { force = true })
+                            end
+                        end
+                    end,
+                },
             },
         })
     end,
