@@ -13,10 +13,12 @@ map("n", "<Leader>-", "<C-x>")
 map("i", "jj", "<ESC>")
 -- increment number
 map("n", "<Leader>+", "<C-a>")
--- save
-map("n", "<leader>w", "<CMD>update<CR>")
+-- last buffer
+map("n", "<Leader>lb", "<CMD>b#<CR>")
 -- quit
 map("n", "<leader>q", "<CMD>q<CR>")
+-- save
+map("n", "<leader>w", "<CMD>update<CR>")
 
 -- ---- Comments
 map("n", "<leader>/", ":lua require('Comment.api').toggle.linewise.current()<CR>")
