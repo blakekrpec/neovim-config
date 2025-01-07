@@ -5,7 +5,7 @@ return
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
         local telescope = require("telescope")
-        local builtin = require("telescope.builtin")
+        local actions = require("telescope.actions")
 
         -- Detect the operating system
         local is_windows = vim.loop.os_uname().version:match("Windows")
@@ -44,32 +44,16 @@ return
             {
                 defaults =
                 {
-                    file_ignore_patterns = ignore_patterns
+                    file_ignore_patterns = ignore_patterns,
+                    mappings = {
+                        -- i = {                              -- Insert mode mappings
+                        --     ["<leader>q"] = actions.close, -- Custom close command
+                        -- },
+                        n = {                              -- Normal mode mappings
+                            ["<leader>q"] = actions.close, -- Custom close command
+                        },
+                    },
                 },
             })
-
-        -- set keymaps
-        local keymap = vim.keymap
-
-        keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
-        keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", { desc = "Fuzzy find recent files" })
-        keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Find string in cwd" })
-        keymap.set("n", "<leader>fs", "<cmd>Telescope git_status<cr>", { desc = "Find string under cursor in cwd" })
-        keymap.set("n", "<leader>fc", "<cmd>Telescope git commits<cr>", { desc = "Find todos" })
-
-        -- Keybinding to access the .config/nvim directory
-        keymap.set("n", "<leader>cn", function()
-            local home = vim.loop.os_homedir()
-            local nvim_config_path = is_windows and
-                (home .. "\\AppData\\Local\\nvim") or
-                (home .. "/.config/nvim")
-
-            builtin.find_files(
-                {
-                    prompt_title = "< NVim Config >",
-                    cwd = nvim_config_path, -- Set cwd based on platform
-                    hidden = false,         -- Exclude hidden files
-                })
-        end, { desc = "Fuzzy find Neovim config files" })
     end, -- Ensure this 'end' closes the 'function'
 }
