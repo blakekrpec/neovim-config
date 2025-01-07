@@ -50,6 +50,8 @@ Clone this repo into `~/.config/` (Ubuntu) or `~/AppData/Local/` (Windows) as `/
 ### **Open Neovim**
 Open a terminal on Ubuntu, or a Windows Powershell on Windows and enter `nvim`. You can either run nvim from a project directory, or pass the project directory path to `nvim`.
 
+Run `nvim -- --no-session` to start `nvim` with `auto-session` disabled.
+
 ## **Trouble Shooting/Notes**
 
 - [Setting Up Unity Debugging](docs/UNITY_DEBUG.md)
