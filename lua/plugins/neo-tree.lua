@@ -20,6 +20,7 @@ return {
                         "*.log",
                         "*.meta",
                         "*.asset",
+                        "Library",
                     },
                 },
                 follow_current_file = {
