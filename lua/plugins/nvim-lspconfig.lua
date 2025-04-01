@@ -19,17 +19,17 @@ return {
         -- Decide if a file type should be formatted
         local function should_format(ft)
             if ft == "cpp" or ft == "c" then
-                return file_exists(".clang-format")
+                return not file_exists(".clang-format")
             elseif ft == "python" then
-                return (file_exists("pyproject.toml") and
+                return not (file_exists("pyproject.toml") and
                         vim.fn.match(vim.fn.readfile("pyproject.toml"), "tool.black") >= 0)
-                    or file_exists(".flake8")
+                    and not file_exists(".flake8")
             elseif ft == "cs" then
-                return file_exists(".editorconfig")
+                return not file_exists(".editorconfig")
             elseif ft == "lua" then
-                return file_exists(".stylua.toml") or file_exists("stylua.toml")
+                return not file_exists(".stylua.toml") or file_exists("stylua.toml")
             end
-            return false
+            return true
         end
 
         -- on_attach function 
