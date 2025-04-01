@@ -1,5 +1,7 @@
 vim.g.mapleader = " "
 
+local builtin = require('telescope.builtin')
+
 local function map(mode, lhs, rhs, opts)
     opts = opts or {}  -- Ensure opts is a table
     opts.silent = true -- Always set silent to true
@@ -74,7 +76,8 @@ map("n", "<leader>cn", function()
             prompt_title = "< NVim Config >",
             cwd = nvim_config_path, -- Set cwd based on platform
             hidden = false,         -- Exclude hidden files
-        })
+        }
+    )
 end, { desc = "Fuzzy find Neovim config files" })
 
 -- ---- ToggleTerm
