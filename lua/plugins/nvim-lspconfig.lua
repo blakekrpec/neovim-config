@@ -32,7 +32,7 @@ return {
             return true
         end
 
-        -- on_attach function 
+        -- on_attach function
         local on_attach = function(client, bufnr)
             if client.server_capabilities.documentFormattingProvider then
                 -- Disable formatting unless explicitly allowed
@@ -75,15 +75,15 @@ return {
                     capabilities = capabilities,
                 })
             end,
-            ["omnisharp"] = function()
-                nvim_lsp["omnisharp"].setup({
-                    cmd = { "omnisharp" },
+            ["lua_ls"] = function()
+                nvim_lsp["lua_ls"].setup({
                     on_attach = on_attach,
                     capabilities = capabilities,
                 })
             end,
-            ["lua_ls"] = function()
-                nvim_lsp["lua_ls"].setup({
+            ["omnisharp"] = function()
+                nvim_lsp["omnisharp"].setup({
+                    cmd = { "omnisharp" },
                     on_attach = on_attach,
                     capabilities = capabilities,
                 })
@@ -97,4 +97,3 @@ return {
         })
     end,
 }
-
