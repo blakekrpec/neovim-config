@@ -1,6 +1,5 @@
 return {
-    'blakekrpec/nvim-dap',
-    branch = 'add-optional-args',
+    'mfussenegger/nvim-dap',
     dependencies = {
         'rcarriga/nvim-dap-ui',
         'nvim-neotest/nvim-nio',
@@ -21,9 +20,9 @@ return {
         end)
 
         -- Unity debug
-        local vstuc_path                            = vim.fn.fnameescape(vim.fn.stdpath('data') ..
+        local vstuc_path          = vim.fn.fnameescape(vim.fn.stdpath('data') ..
             '/vstuc/extension/bin')
-        local vstuc_opts                            = {
+        local vstuc_opts          = {
             type = 'vstuc',
             request = 'attach',
             name = 'Attach to Unity',
@@ -32,25 +31,23 @@ return {
             endPoint = unity.find_probe()
         }
 
-        dap.configurations.cs                       = { vstuc_opts }
+        dap.configurations.cs     = { vstuc_opts }
 
-        dap.adapters.vstuc                          = {
+        dap.adapters.vstuc        = {
             type = 'executable',
             command = 'dotnet',
             args = { vstuc_path .. '/UnityDebugAdapter.dll' },
             name = 'Attach to Unity',
         }
 
-        dap.defaults.vstuc.exception_filter_options = {}
-
         -- Python debug
-        dap.adapters.python                         = {
+        dap.adapters.python       = {
             type = 'executable',
             command = vim.fn.stdpath('data') .. '/mason/packages/debugpy/venv/Scripts/python', -- Path to Mason's python for debugpy
             args = { '-m', 'debugpy.adapter' },
         }
 
-        dap.configurations.python                   = {
+        dap.configurations.python = {
             {
                 type = 'python',
                 request = 'launch',
@@ -78,7 +75,7 @@ return {
         }
 
         -- C++ debug
-        dap.configurations.cpp                      = {
+        dap.configurations.cpp    = {
             {
                 name = 'Launch File',
                 type = 'codelldb',
@@ -103,7 +100,7 @@ return {
             },
         }
 
-        dap.adapters.codelldb                       = {
+        dap.adapters.codelldb     = {
             type = "server",
             port = "${port}",
             executable = {
