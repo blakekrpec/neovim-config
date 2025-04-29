@@ -37,6 +37,8 @@ map("v", "<leader>/", ":lua require('Comment.api').toggle.linewise(vim.fn.visual
 map("n", "<leader>ls", ":Lazy sync<CR>")
 
 -- ---- LSP
+-- see code action
+map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap=true, silent=true })
 -- go-to-declaration
 map("n", "<leader>gD", '<cmd>lua vim.lsp.buf.declaration()<CR>')
 -- go-to-definition
