@@ -12,13 +12,22 @@ local function find_vstuc()
     return probe_dll_exists, debug_dll_exists
 end
 
+local function log_to_file(msg)
+    local log_path = vim.fn.stdpath('data') .. '/unity_probe.log'
+    local file = io.open(log_path, 'a')
+    if file then
+        file:write(os.date('%Y-%m-%d %H:%M:%S') .. ' - ' .. msg .. '\n')
+        file:close()
+    end
+end
+
 -- Finds unity instance to attach to
 function M.find_probe()
     local vstuc_path = vim.fn.fnameescape(vim.fn.stdpath('data') .. '/vstuc/extension/bin')
     local system_obj = vim.system({ 'dotnet', vstuc_path .. '/UnityAttachProbe.dll' }, { text = true })
     local probe_result = system_obj:wait(2000).stdout
     if probe_result == nil or #probe_result == 0 then
-        print('No endpoint found (is unity running?)')
+        log_to_file('No endpoint found (is unity running?)')
         return nil
     end
     for json in vim.gsplit(probe_result, '\n') do
