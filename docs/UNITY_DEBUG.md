@@ -4,7 +4,7 @@
 
 Debugging Unity with Neovim is not straightforward, and requires a couple of dlls from Visual Studio Tools for Unity (vstuc). `unity.lua` expects these files in the `nvim-data`. On Windows `nvim-data` is at `~/AppData/Local/nvim-data`, and on Ubuntu it's at `~/.local/share/nvim`. When using this repo, it is currently required to manually download and extract these dlls into your `nvim-data`.
 
-:warning: These instructions install Vistual Stuidio Toolkit for Unity (vstuc) v1.1.0. v1.1.1 and newer target .NET 9.0. If you change the `wget` command below to get `latest` or a version >= 1.1.1 you need to have .NET 9.0 SDK installed.
+:warning: These instructions install Vistual Stuidio Toolkit for Unity (vstuc) `v1.1.0`. `v1.1.1` and newer target `.NET 9.0`. If you change the `wget` command below to get `latest` or a version >= `1.1.1` you need to have `.NET 9.0` SDK installed.
 
 ## 1) Download vstuc
 
