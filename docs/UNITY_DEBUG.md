@@ -11,7 +11,7 @@ Debugging Unity with Neovim is not straightforward, and requires a couple of dll
 cd ~/AppData/Local/nvim-data
 ```
 ```
-wget https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioToolsForUnity/vsextensions/vstuc/1.0.4/vspackage -OutFile vstuc.zip
+wget https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioToolsForUnity/vsextensions/vstuc/latest/vspackage -OutFile vstuc.zip
 ```
 ```
 Expand-Archive -Path .\vstuc.zip -DestinationPath vstuc
@@ -25,7 +25,7 @@ rm  vstuc.zip
 cd ~/.local/share/nvim
 ```
 ```
-wget -O vstuc.vsix.gz https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioToolsForUnity/vsextensions/vstuc/1.0.4/vspackage
+wget -O vstuc.vsix.gz https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioToolsForUnity/vsextensions/vstuc/latest/vspackage
 ```
 ```
 gunzip vstuc.vsix.gz
