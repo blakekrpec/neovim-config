@@ -101,11 +101,11 @@ function M.setup()
             table.insert(error_messages, 'UnityAttachProbe.dll is missing.')
         end
         if not found_debug_dll then
-            table.insert(error_messages, 'UnityDebugAttach.dll is missing.') -- Updated DLL name
+            table.insert(error_messages, 'UnityDebugAttach.dll is missing.') 
         end
         table.insert(error_messages, 'See docs/UNITY_DEBUG.md for help.')
-        -- Concatenate all error messages and notify the user
-        vim.notify(table.concat(error_messages, '\n'), vim.log.levels.ERROR, { title = 'Unity DLL Check' })
+        -- Concatenate all error messages and log
+        log_to_file(table.concat(error_messages, ' '))
     end
 end
 
