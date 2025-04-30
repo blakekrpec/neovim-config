@@ -27,6 +27,10 @@ return {
                     enabled = true,          -- Focuses file in the active buffer.
                     leave_dirs_open = false, -- Closes auto expanded dirs.
                 },
+                watcher = {
+                    enable = true,
+                    ignore_dirs = { "Library", "Temp", "obj", "Logs" },
+                },
             },
             buffers = {
                 use_icons = true,
