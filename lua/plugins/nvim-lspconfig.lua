@@ -94,6 +94,26 @@ return {
                     cmd = { "omnisharp" },
                     on_attach = on_attach,
                     capabilities = capabilities,
+                    settings = {
+                        omnisharp = {
+                            fileOptions = {
+                                systemExcludeSearchPatterns = {
+                                    "**/Library/**",
+                                    "**/Temp/**",
+                                    "**/Obj/**",
+                                    "**/Build/**",
+                                    "**/.git/**",
+                                },
+                            },
+                            fileWatchIgnore = {
+                                "**/Library/**",
+                                "**/Temp/**",
+                                "**/Obj/**",
+                                "**/Build/**",
+                                "**/.git/**",
+                            },
+                        },
+                    },
                 })
             end,
             ["pylsp"] = function()
