@@ -14,13 +14,15 @@ return {
                 filtered_items = {
                     hide_dotfiles = true,   -- Hide dotfiles
                     hide_gitignored = true, -- Hide files in .gitignore
-                    never_show = {          -- List of files or patterns to ignore
+                    never_show = {
                         ".git",
-                        "*.tmp",
-                        "*.log",
+                        "Library",
+                    },
+                    never_show_by_pattern = {
                         "*.meta",
                         "*.asset",
-                        "Library",
+                        "*.tmp",
+                        "*.log",
                     },
                 },
                 follow_current_file = {
