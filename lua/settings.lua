@@ -28,3 +28,5 @@ o.title = true      -- When on, the title of the window will be set to the value
 o.ttimeoutlen = 0   -- The time in milliseconds that is waited for a key code or mapped key sequence to complete.
 o.wildmenu = true   -- When 'wildmenu' is on, command-line completion operates in an enhanced mode.
 o.wrap = false
+
+vim.api.nvim_set_option("clipboard", "unnamed")

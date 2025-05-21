@@ -28,10 +28,14 @@ map("n", "<leader>q", "<CMD>q<CR>")
 map("n", "<leader>w", "<CMD>update<CR>")
 
 -- ---- Comments
-map("n", "<leader>/", ":lua require('Comment.api').toggle.linewise.current()<CR>")
-map("v", "<leader>/", ":lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>")
+map("n", "<leader>/", ":lua require('Comment.api').toggle.linewise.current()<CR>", { desc = "Toggle comments"})
+map("v", "<leader>/", ":lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", { desc = "Toggle comments"})
 
 -- ---- Debug
+map("n", "<leader>db", function() require("dapui").toggle() require("dap").continue() end, { desc = "Toggle DAP UI and start debugging" })
+map("n", "<leader>dc", "<CMD>:DapContinue<CR>")
+map("n", "<leader>dt", function() require("dapui").toggle() require("dap").terminate() end, { desc = "Toggle DAP UI and stop debugging" })
+map("n", "<leader>dg", "<CMD>:DapToggleBreakpoint<CR>")
 
 -- ---- Lazy
 map("n", "<leader>ls", ":Lazy sync<CR>")
