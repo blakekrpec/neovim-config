@@ -44,7 +44,6 @@ map("n", "<leader>dt", function()
     require("dapui").toggle()
     require("dap").terminate()
     require("dap").disconnect()
-    require("dapui").hover()
 end, { desc = "Toggle DAP UI and stop debugging" })
 -- toggle dap breakpoint
 map("n", "<leader>dg", "<CMD>:DapToggleBreakpoint<CR>", { desc = "Toggle DAP breakpoint."})
