@@ -20,7 +20,7 @@ return
                 "%.asset$",
                 "Library\\.*", -- Match 'Library' at any point in the path (Windows style)
                 "Doxygen\\.*", -- Match 'Doxygen' at any point in the path (Windows style)
-                "TextMeshPro\\.*", -- Match 'TextMeshPro' at any point in the path (Windows style)
+                "TextMesh Pro\\.*", -- Match 'TextMesh Pro' at any point in the path (Windows style)
                 "Build\\.*",   -- Match 'Build' at any point in the path (Windows style)
                 "__pycache\\", -- Windows style path
                 "%.bin$",
@@ -36,7 +36,7 @@ return
                 "%.tmp$",
                 "Library/.*", -- Match 'Library' at any point in the path (Unix style)
                 "Doxygen/.*", -- Match 'Doxygen' at any point in the path (Unix style)
-                "TextMeshPro/.*", -- Match 'TextMeshPro' at any point in the path (Unix style)
+                "TextMesh Pro/.*", -- Match 'TextMesh Pro' at any point in the path (Unix style)
                 "Build/.*",   -- Match 'Build' at any point in the path (Unix style)
                 "__pycache/", -- Unix style path
                 "%.bin$",
@@ -49,6 +49,7 @@ return
                 defaults =
                 {
                     file_ignore_patterns = ignore_patterns,
+                    path_display = { "filename_first" },
                     mappings = {
                         -- i = {                              -- Insert mode mappings
                         --     ["<leader>q"] = actions.close, -- Custom close command
