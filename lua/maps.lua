@@ -32,9 +32,19 @@ map("n", "<leader>/", ":lua require('Comment.api').toggle.linewise.current()<CR>
 map("v", "<leader>/", ":lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", { desc = "Toggle comments"})
 
 -- ---- Debug
-map("n", "<leader>db", function() require("dapui").toggle() require("dap").continue() end, { desc = "Toggle DAP UI and start debugging" })
+-- start debugger and dap ui
+map("n", "<leader>db", function()
+    require("dapui").toggle()
+    require("dap").continue()
+end, { desc = "Toggle DAP UI and start debugging" })
+-- dap continue
 map("n", "<leader>dc", "<CMD>:DapContinue<CR>", { desc = "Continue debugging (DAP)" })
-map("n", "<leader>dt", function() require("dapui").toggle() require("dap").disconnect() end, { desc = "Toggle DAP UI and stop debugging" })
+-- disconnect debugger and close dap ui
+map("n", "<leader>dt", function()
+    require("dapui").toggle()
+    require("dap").disconnect()
+end, { desc = "Toggle DAP UI and stop debugging" })
+-- toggle dap breakpoint
 map("n", "<leader>dg", "<CMD>:DapToggleBreakpoint<CR>", { desc = "Toggle DAP breakpoint."})
 
 -- ---- Lazy
@@ -50,9 +60,13 @@ map("n", "<leader>gd", '<cmd>lua vim.lsp.buf.definition()<CR>', { desc = "Go to 
 -- hover
 map("n", "<leader>K", '<cmd>lua vim.lsp.buf.hover()<CR>', { desc = "Hover information" })
 -- rename symbol
-map("n", "<leader>rn", ":lua vim.lsp.buf.rename()<CR>", { desc = "Rename symbol" })
--- show refs
-map("n", "<leader>gr", '<cmd>lua vim.lsp.buf.references()<CR>', { desc = "Get references - Vim/LSP" })
+map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "Rename symbol" })
+-- show references
+map("n", "<leader>gr", function()
+  require('telescope.builtin').lsp_references({
+    initial_mode = "normal"
+  })
+end, { desc = "Get references - Telescope (list focused)" })
 -- switch between cpp and header
 map("n", "<F4>", ':ClangdSwitchSourceHeader<CR>', { desc = "Switch between source/header (C++)" })
 
