@@ -6,10 +6,7 @@ return {
     },
     config = function()
         local dap = require('dap')
-        local dapui = require('dapui')
         local unity = require('unity')
-
-        dapui.setup()
 
         -- Unity debug
         local unity_end_point = unity.find_probe()
