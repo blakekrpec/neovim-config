@@ -10,14 +10,6 @@ return {
         local unity = require('unity')
 
         dapui.setup()
-        vim.keymap.set('n', '<F5>', function()
-            dapui.open()
-            dap.continue()
-        end)
-        vim.keymap.set('n', '<S-F5>', function()
-            dapui.close()
-            dap.disconnect()
-        end)
 
         -- Unity debug
         local vstuc_path          = vim.fn.fnameescape(vim.fn.stdpath('data') ..
