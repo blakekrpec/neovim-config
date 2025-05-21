@@ -63,11 +63,10 @@ map("n", "<leader>K", '<cmd>lua vim.lsp.buf.hover()<CR>', { desc = "Hover inform
 -- rename symbol
 map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "Rename symbol" })
 -- show references
+-- show references with Trouble
 map("n", "<leader>gr", function()
-  require('telescope.builtin').lsp_references({
-    initial_mode = "normal"
-  })
-end, { desc = "Get references - Telescope (list focused)" })
+  require("trouble").open("lsp_references")
+end, { desc = "Get references - Trouble" })
 -- switch between cpp and header
 map("n", "<F4>", ':ClangdSwitchSourceHeader<CR>', { desc = "Switch between source/header (C++)" })
 

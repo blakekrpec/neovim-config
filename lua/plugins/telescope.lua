@@ -60,5 +60,5 @@ return
                     },
                 },
             })
-    end, -- Ensure this 'end' closes the 'function'
+    end,
 }
