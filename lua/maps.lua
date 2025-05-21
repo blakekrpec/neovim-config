@@ -42,6 +42,7 @@ map("n", "<leader>dc", "<CMD>:DapContinue<CR>", { desc = "Continue debugging (DA
 -- disconnect debugger and close dap ui
 map("n", "<leader>dt", function()
     require("dapui").toggle()
+    require("dap").terminate()
     require("dap").disconnect()
 end, { desc = "Toggle DAP UI and stop debugging" })
 -- toggle dap breakpoint
