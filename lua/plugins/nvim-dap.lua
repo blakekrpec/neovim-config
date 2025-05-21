@@ -12,25 +12,28 @@ return {
         dapui.setup()
 
         -- Unity debug
-        local vstuc_path          = vim.fn.fnameescape(vim.fn.stdpath('data') ..
-            '/vstuc/extension/bin')
-        local vstuc_opts          = {
-            type = 'vstuc',
-            request = 'attach',
-            name = 'Attach to Unity',
-            logFile = vim.fs.joinpath(vim.fn.stdpath('data')) .. '/vstuc.log',
-            projectPath = unity.find_project_path(),
-            endPoint = unity.find_probe()
-        }
+        local unity_end_point = unity.find_probe()
+        if unity_end_point then
+            local vstuc_path          = vim.fn.fnameescape(vim.fn.stdpath('data') ..
+                '/vstuc/extension/bin')
+            local vstuc_opts          = {
+                type = 'vstuc',
+                request = 'attach',
+                name = 'Attach to Unity',
+                logFile = vim.fs.joinpath(vim.fn.stdpath('data'), '/vstuc.log'),
+                projectPath = unity.find_project_path(),
+                endPoint = unity.find_probe()
+            }
 
-        dap.configurations.cs     = { vstuc_opts }
+            dap.configurations.cs     = { vstuc_opts }
 
-        dap.adapters.vstuc        = {
-            type = 'executable',
-            command = 'dotnet',
-            args = { vstuc_path .. '/UnityDebugAdapter.dll' },
-            name = 'Attach to Unity',
-        }
+            dap.adapters.vstuc        = {
+                type = 'executable',
+                command = 'dotnet',
+                args = { vstuc_path .. '/UnityDebugAdapter.dll' },
+                name = 'Attach to Unity',
+            }
+        end
 
         -- Python debug
         dap.adapters.python       = {

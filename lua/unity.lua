@@ -24,7 +24,13 @@ end
 -- Finds unity instance to attach to
 function M.find_probe()
     local vstuc_path = vim.fn.fnameescape(vim.fn.stdpath('data') .. '/vstuc/extension/bin')
-    local system_obj = vim.system({ 'dotnet', vstuc_path .. '/UnityAttachProbe.dll' }, { text = true })
+    local probe_path = vstuc_path .. '/UnityAttachProbe.dll'
+    if vim.fn.filereadable(probe_path) == 0 then
+        log_to_file("vstuc path not found. Was vstuc downloaded per instructions in docs/UNITY_DEBUG.md?")
+        return nil
+    end
+
+    local system_obj = vim.system({ 'dotnet', probe_path }, { text = true })
     local probe_result = system_obj:wait(2000).stdout
     if probe_result == nil or #probe_result == 0 then
         log_to_file('No endpoint found (is unity running?)')
