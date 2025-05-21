@@ -13,19 +13,19 @@ local is_windows = vim.loop.os_uname().version:match("Windows")
 
 -- ---- General Vim Stuff
 -- clear highlights
-map("n", "<Leader>nh", ":nohl<CR>")
+map("n", "<Leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 -- decrement number
-map("n", "<Leader>-", "<C-x>")
+map("n", "<Leader>-", "<C-x>", { desc = "Decrement number" })
 -- exit insert mode
-map("i", "jj", "<ESC>")
+map("i", "jj", "<ESC>", { desc = "Exit insert mode" })
 -- increment number
-map("n", "<Leader>+", "<C-a>")
+map("n", "<Leader>+", "<C-a>", { desc = "Increment number" })
 -- last buffer
-map("n", "<Leader>lb", "<CMD>b#<CR>")
+map("n", "<Leader>lb", "<CMD>b#<CR>", { desc = "Switch to last buffer" })
 -- quit
-map("n", "<leader>q", "<CMD>q<CR>")
+map("n", "<leader>q", "<CMD>q<CR>", { desc = "Quit current window" })
 -- save
-map("n", "<leader>w", "<CMD>update<CR>")
+map("n", "<leader>w", "<CMD>update<CR>", { desc = "Save current buffer" })
 
 -- ---- Comments
 map("n", "<leader>/", ":lua require('Comment.api').toggle.linewise.current()<CR>", { desc = "Toggle comments"})
@@ -33,35 +33,35 @@ map("v", "<leader>/", ":lua require('Comment.api').toggle.linewise(vim.fn.visual
 
 -- ---- Debug
 map("n", "<leader>db", function() require("dapui").toggle() require("dap").continue() end, { desc = "Toggle DAP UI and start debugging" })
-map("n", "<leader>dc", "<CMD>:DapContinue<CR>")
-map("n", "<leader>dt", function() require("dapui").toggle() require("dap").terminate() end, { desc = "Toggle DAP UI and stop debugging" })
-map("n", "<leader>dg", "<CMD>:DapToggleBreakpoint<CR>")
+map("n", "<leader>dc", "<CMD>:DapContinue<CR>", { desc = "Continue debugging (DAP)" })
+map("n", "<leader>dt", function() require("dapui").toggle() require("dap").disconnect() end, { desc = "Toggle DAP UI and stop debugging" })
+map("n", "<leader>dg", "<CMD>:DapToggleBreakpoint<CR>", { desc = "Toggle DAP breakpoint."})
 
 -- ---- Lazy
-map("n", "<leader>ls", ":Lazy sync<CR>")
+map("n", "<leader>ls", ":Lazy sync<CR>", { desc = "Sync Lazy.nvim plugins" })
 
 -- ---- LSP
 -- see code action
-map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap=true, silent=true })
+map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap=true, silent=true, desc = "LSP Code Action" })
 -- go-to-declaration
-map("n", "<leader>gD", '<cmd>lua vim.lsp.buf.declaration()<CR>')
+map("n", "<leader>gD", '<cmd>lua vim.lsp.buf.declaration()<CR>', { desc = "Go to declaration" })
 -- go-to-definition
-map("n", "<leader>gd", '<cmd>lua vim.lsp.buf.definition()<CR>')
+map("n", "<leader>gd", '<cmd>lua vim.lsp.buf.definition()<CR>', { desc = "Go to definition" })
 -- hover
-map("n", "<leader>K", '<cmd>lua vim.lsp.buf.hover()<CR>')
+map("n", "<leader>K", '<cmd>lua vim.lsp.buf.hover()<CR>', { desc = "Hover information" })
 -- rename symbol
-map("n", "<leader>rn", ":lua vim.lsp.buf.rename()<CR>")
+map("n", "<leader>rn", ":lua vim.lsp.buf.rename()<CR>", { desc = "Rename symbol" })
 -- show refs
 map("n", "<leader>gr", '<cmd>lua vim.lsp.buf.references()<CR>', { desc = "Get references - Vim/LSP" })
 -- switch between cpp and header
-map("n", "<F4>", ':ClangdSwitchSourceHeader<CR>')
+map("n", "<F4>", ':ClangdSwitchSourceHeader<CR>', { desc = "Switch between source/header (C++)" })
 
 -- ---- NeoTree
-map("n", "<leader>nf", "<CMD>Neotree toggle filesystem<CR>")
-map("n", "<leader>nb", "<CMD>Neotree toggle buffers<CR>")
+map("n", "<leader>nf", "<CMD>Neotree toggle filesystem<CR>", { desc = "Toggle NeoTree filesystem" })
+map("n", "<leader>nb", "<CMD>Neotree toggle buffers<CR>", { desc = "Toggle NeoTree buffers" })
 
 -- ---- Outline
-map("n", "<leader>o", "<CMD>Outline<CR>")
+map("n", "<leader>o", "<CMD>Outline<CR>", { desc = "Toggle symbols outline" })
 
 -- ---- Telescope
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
@@ -87,4 +87,4 @@ map("n", "<leader>cn", function()
 end, { desc = "Fuzzy find Neovim config files" })
 
 -- ---- ToggleTerm
-map("n", "<leader>ty", "<cmd>ToggleTerm<CR>")
+map("n", "<leader>ty", "<cmd>ToggleTerm<CR>", { desc = "Toggle terminal" })
