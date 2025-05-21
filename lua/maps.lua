@@ -44,14 +44,16 @@ map("n", "<leader>dt", function()
     require("dapui").toggle()
     require("dap").terminate()
     require("dap").disconnect()
+    require("dapui").hover()
 end, { desc = "Toggle DAP UI and stop debugging" })
 -- toggle dap breakpoint
 map("n", "<leader>dg", "<CMD>:DapToggleBreakpoint<CR>", { desc = "Toggle DAP breakpoint."})
+-- dap hover
 
 -- ---- Lazy
 map("n", "<leader>ls", ":Lazy sync<CR>", { desc = "Sync Lazy.nvim plugins" })
 
--- ---- LSP
+-- ---- LSP, Trouble
 -- see code action
 map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap=true, silent=true, desc = "LSP Code Action" })
 -- go-to-declaration
@@ -62,11 +64,23 @@ map("n", "<leader>gd", '<cmd>lua vim.lsp.buf.definition()<CR>', { desc = "Go to 
 map("n", "<leader>K", '<cmd>lua vim.lsp.buf.hover()<CR>', { desc = "Hover information" })
 -- rename symbol
 map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "Rename symbol" })
--- show references
 -- show references with Trouble
 map("n", "<leader>gr", function()
   require("trouble").open("lsp_references")
 end, { desc = "Get references - Trouble" })
+-- show document diagnostics with Trouble
+map("n", "<leader>td", function()
+  require("trouble").open({
+        mode = "diagnostics",
+        filter = { buf = 0 },
+    })
+end, { desc = "Get document diagnostics - Trouble" })
+-- show workspace diagnostics with Trouble
+map("n", "<leader>tw", function()
+  require("trouble").open({
+        mode = "diagnostics",
+    })
+end, { desc = "Get workspace diagnostics - Trouble" })
 -- switch between cpp and header
 map("n", "<F4>", ':ClangdSwitchSourceHeader<CR>', { desc = "Switch between source/header (C++)" })
 

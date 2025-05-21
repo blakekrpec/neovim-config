@@ -12,6 +12,26 @@ return {
         },
         modes =
         {
+            diagnostics =
+            {
+                mode = "diagnostics",
+                preview =
+                {
+                    type = "float",
+                    relative = "editor",
+                    border = "rounded",
+                    title = "Preview",
+                     size = {
+                        width = 0.5,
+                        height = 0.4,
+                    },
+                    position = { 0.5, 0.5},
+                },
+                action = function(item, trouble)
+                    trouble:jump(item)
+                    trouble:close()
+                end,
+            },
             lsp_references =
             {
                 mode = "lsp_references",
