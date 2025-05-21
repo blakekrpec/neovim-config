@@ -19,6 +19,8 @@ return
                 "%.tmp$",
                 "%.asset$",
                 "Library\\.*", -- Match 'Library' at any point in the path (Windows style)
+                "Doxygen\\.*", -- Match 'Doxygen' at any point in the path (Windows style)
+                "TextMeshPro\\.*", -- Match 'TextMeshPro' at any point in the path (Windows style)
                 "Build\\.*",   -- Match 'Build' at any point in the path (Windows style)
                 "__pycache\\", -- Windows style path
                 "%.bin$",
@@ -33,6 +35,8 @@ return
                 "%.asset$",
                 "%.tmp$",
                 "Library/.*", -- Match 'Library' at any point in the path (Unix style)
+                "Doxygen/.*", -- Match 'Doxygen' at any point in the path (Unix style)
+                "TextMeshPro/.*", -- Match 'TextMeshPro' at any point in the path (Unix style)
                 "Build/.*",   -- Match 'Build' at any point in the path (Unix style)
                 "__pycache/", -- Unix style path
                 "%.bin$",
