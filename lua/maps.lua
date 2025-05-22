@@ -48,6 +48,14 @@ end, { desc = "Toggle DAP UI and stop debugging" })
 -- toggle dap breakpoint
 map("n", "<leader>dg", "<CMD>:DapToggleBreakpoint<CR>", { desc = "Toggle DAP breakpoint."})
 -- dap hover
+map("n", "<leader>dh", function()
+    require("dapui").eval(nil, {
+        enter = true,
+        context = "hover", -- could also be "scopes" or others
+        height = 10,
+        width = 50,
+    })
+end, { desc = "DAP Hover Eval (Float)" })
 
 -- ---- Lazy
 map("n", "<leader>ls", ":Lazy sync<CR>", { desc = "Sync Lazy.nvim plugins" })
