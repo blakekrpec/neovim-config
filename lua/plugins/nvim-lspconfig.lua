@@ -81,6 +81,11 @@ return {
                     root_dir = util.root_pattern("compile_commands.json", ".git"),
                     on_attach = on_attach,
                     capabilities = capabilities,
+                    handlers = {
+                        ["$/progress"] = function(_, result, ctx)
+                            print(result)
+                        end,
+                    },
                 })
             end,
             ["lua_ls"] = function()
