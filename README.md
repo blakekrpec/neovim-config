@@ -19,7 +19,7 @@
 curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz
 tar -xzf nvim-linux-x86_64.tar.gz
 sudo mv nvim-linux-x86_64 /usr/local/bin/
-sudo ln -s /usr/local/bin/nvim/bin/nvim /usr/local/bin/nvim
+sudo ln -s /usr/local/bin/nvim-linux_x86-64/bin/nvim /usr/local/bin/nvim
 rm nvim-linux-x86_64.tar.gz
 ```
 * Verify installation:
