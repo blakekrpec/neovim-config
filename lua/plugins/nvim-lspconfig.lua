@@ -47,17 +47,14 @@ return {
             if client.server_capabilities.documentFormattingProvider then
                 local ft = vim.bo[bufnr].filetype
                 if not should_format(ft) then
-                    -- print("Disabling LSP formatting for:", ft)
                     client.server_capabilities.documentFormattingProvider = false
                     return
                 end
 
-                -- print("Enabling LSP formatting for:", ft)
                 vim.api.nvim_create_autocmd("BufWritePre", {
                     group = vim.api.nvim_create_augroup("Format", { clear = true }),
                     buffer = bufnr,
                     callback = function()
-                        -- print("Running formatter for:", ft)
                         vim.lsp.buf.format({ async = false })
                     end,
                 })
@@ -67,50 +64,32 @@ return {
         -- LSP capabilities for autocompletion
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-        mason_lspconfig.setup_handlers({
-            function(server)
-                nvim_lsp[server].setup({
-                    capabilities = capabilities,
-                    on_attach = on_attach,
-                })
-            end,
-            ["clangd"] = function()
-                nvim_lsp["clangd"].setup({
-                    cmd = { "clangd" },
-                    filetypes = { "c", "cpp", "objc", "objcpp", "h", "hpp" },
-                    root_dir = util.root_pattern("compile_commands.json", ".git"),
-                    on_attach = on_attach,
-                    capabilities = capabilities,
-                    handlers = {
-                        ["$/progress"] = function(_, result, ctx)
-                            print(result)
-                        end,
-                    },
-                })
-            end,
-            ["lua_ls"] = function()
-                nvim_lsp["lua_ls"].setup({
-                    on_attach = on_attach,
-                    capabilities = capabilities,
-                })
-            end,
-            ["omnisharp"] = function()
-                nvim_lsp["omnisharp"].setup({
-                    cmd = { "omnisharp" },
-                    on_attach = on_attach,
-                    capabilities = capabilities,
-                    settings = {
-                        omnisharp = {
-                            fileOptions = {
-                                systemExcludeSearchPatterns = {
-                                    "**/Library/**",
-                                    "**/Temp/**",
-                                    "**/Obj/**",
-                                    "**/Build/**",
-                                    "**/.git/**",
-                                },
-                            },
-                            fileWatchIgnore = {
+        -- setup Mason LSPConfig and get installed servers
+        mason_lspconfig.setup()
+
+        for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
+            local opts = {
+                on_attach = on_attach,
+                capabilities = capabilities,
+            }
+
+            if server == "clangd" then
+                opts.cmd = { "clangd" }
+                opts.filetypes = { "c", "cpp", "objc", "objcpp", "h", "hpp" }
+                opts.root_dir = util.root_pattern("compile_commands.json", ".git")
+                opts.handlers = {
+                    ["$/progress"] = function(_, result, ctx)
+                        print(result)
+                    end,
+                }
+            elseif server == "lua_ls" then
+                -- no extra settings now, but this keeps lua_ls explicitly configured
+            elseif server == "omnisharp" then
+                opts.cmd = { "omnisharp" }
+                opts.settings = {
+                    omnisharp = {
+                        fileOptions = {
+                            systemExcludeSearchPatterns = {
                                 "**/Library/**",
                                 "**/Temp/**",
                                 "**/Obj/**",
@@ -118,15 +97,20 @@ return {
                                 "**/.git/**",
                             },
                         },
+                        fileWatchIgnore = {
+                            "**/Library/**",
+                            "**/Temp/**",
+                            "**/Obj/**",
+                            "**/Build/**",
+                            "**/.git/**",
+                        },
                     },
-                })
-            end,
-            ["pylsp"] = function()
-                nvim_lsp["pylsp"].setup({
-                    on_attach = on_attach,
-                    capabilities = capabilities,
-                })
-            end,
-        })
+                }
+            elseif server == "pylsp" then
+                -- no extra settings now, but this keeps pylsp explicitly configured
+            end
+
+            nvim_lsp[server].setup(opts)
+        end
     end,
 }
