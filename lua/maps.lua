@@ -64,9 +64,13 @@ map("n", "<leader>ls", ":Lazy sync<CR>", { desc = "Sync Lazy.nvim plugins" })
 -- see code action
 map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap=true, silent=true, desc = "LSP Code Action" })
 -- go-to-declaration
-map("n", "<leader>gD", '<cmd>lua vim.lsp.buf.declaration()<CR>', { desc = "Go to declaration" })
+map("n", "<leader>gD", function()
+  require("trouble").open("lsp_declarations")
+end, { desc = "Go to declaration - Trouble" })
 -- go-to-definition
-map("n", "<leader>gd", '<cmd>lua vim.lsp.buf.definition()<CR>', { desc = "Go to definition" })
+map("n", "<leader>gd", function()
+  require("trouble").open("lsp_definitions")
+end, { desc = "Go to definition - Trouble" })
 -- hover
 map("n", "<leader>K", '<cmd>lua vim.lsp.buf.hover()<CR>', { desc = "Hover information" })
 -- rename symbol
