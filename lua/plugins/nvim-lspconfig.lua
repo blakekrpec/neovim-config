@@ -139,7 +139,7 @@ return {
         -- Enable all configured servers (required in Neovim 0.11+)
         vim.lsp.enable({
             "clangd",
-            "cmake",
+            "neocmakelsp",
             "lua_ls",
             "marksman",
             "omnisharp",
