@@ -49,7 +49,7 @@ return {
             automatic_installation = true,
             ensure_installed = {
                 "clangd",
-                "neocmakelsp",
+                "neocmake",
                 "lua_ls",
                 "marksman",
                 "omnisharp",
