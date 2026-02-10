@@ -11,8 +11,8 @@ return {
         local util = require("lspconfig.util")
 
         -- Formatting helpers
-        local function find_root(pattern)
-            return util.root_pattern(pattern)(vim.api.nvim_buf_get_name(0))
+        local function find_root(pattern, bufnr)
+            return util.root_pattern(pattern)(vim.api.nvim_buf_get_name(bufnr))
         end
 
         local function file_contains(filepath, pattern)
@@ -25,25 +25,25 @@ return {
         end
 
         local format_conditions = {
-            c = function() return find_root(".clang-format") end,
-            cpp = function() return find_root(".clang-format") end,
-            cs = function() return find_root(".editorconfig") end,
-            lua = function() return find_root(".stylua.toml") or find_root("stylua.toml") end,
-            python = function()
-                local root = find_root("pyproject.toml")
+            c = function(bufnr) return find_root(".clang-format", bufnr) end,
+            cpp = function(bufnr) return find_root(".clang-format", bufnr) end,
+            cs = function(bufnr) return find_root(".editorconfig", bufnr) end,
+            lua = function(bufnr) return find_root(".stylua.toml", bufnr) or find_root("stylua.toml", bufnr) end,
+            python = function(bufnr)
+                local root = find_root("pyproject.toml", bufnr)
                 if root then
                     local path = root .. "/pyproject.toml"
                     if file_contains(path, "%[tool%.black%]") then return true end
                     if file_contains(path, "%[tool%.ruff%]") then return true end
                 end
-                return find_root(".flake8")
+                return find_root(".flake8", bufnr)
             end,
         }
 
         local function should_format(bufnr)
             local ft = vim.bo[bufnr].filetype
             local check = format_conditions[ft]
-            return check and check()
+            return check and check(bufnr)
         end
 
         -- on_attach: format-on-save when config exists
@@ -53,7 +53,6 @@ return {
             end
 
             if not should_format(bufnr) then
-                client.server_capabilities.documentFormattingProvider = false
                 return
             end
 
@@ -83,6 +82,20 @@ return {
         })
 
         -- C/C++
+        -- Create ClangdSwitchSourceHeader command (not auto-created with vim.lsp.config)
+        vim.api.nvim_create_user_command("ClangdSwitchSourceHeader", function()
+            local params = { uri = vim.uri_from_bufnr(0) }
+            vim.lsp.buf_request(0, "textDocument/switchSourceHeader", params, function(err, result)
+                if err then
+                    vim.notify("Error switching source/header: " .. tostring(err), vim.log.levels.ERROR)
+                elseif result then
+                    vim.cmd.edit(vim.uri_to_fname(result))
+                else
+                    vim.notify("No corresponding file found", vim.log.levels.WARN)
+                end
+            end)
+        end, { desc = "Switch between source and header file" })
+
         vim.lsp.config("clangd", {
             cmd = {
                 "clangd",
@@ -123,6 +136,11 @@ return {
             },
         })
 
+        -- CMake
+        vim.lsp.config("neocmake", {
+            cmd = { "neocmakelsp", "stdio" },
+        })
+
         -- Python
         vim.lsp.config("pylsp", {
             settings = {
@@ -139,7 +157,7 @@ return {
         -- Enable all configured servers (required in Neovim 0.11+)
         vim.lsp.enable({
             "clangd",
-            "neocmakelsp",
+            "neocmake",
             "lua_ls",
             "marksman",
             "omnisharp",
