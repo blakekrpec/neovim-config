@@ -62,3 +62,4 @@ Run `nvim -- --no-session` to start `nvim` with `auto-session` disabled.
 - [Getting clangd LSP Working With ROS2](docs/ROS2_CLANGD.md)
 - [Mason Not Installing cmake on Windows](docs/MASON_CMAKE_WINDOWS.md)
 - [How to Install LLVM on Windows 11](docs/LLVM_WIN11.md)
+- [Mason Not Installing on Ubuntu (missing unzip)](docs/MASON_UNZIP_UBUNTU.md)
