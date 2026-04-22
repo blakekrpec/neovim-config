@@ -102,7 +102,10 @@ return {
                 "--query-driver=/usr/bin/c++,/usr/bin/g++",
                 "--completion-style=detailed",
                 "--header-insertion=iwyu",
-                "--clang-tidy",
+                -- "--clang-tidy",
+                "--background-index",
+                "--pch-storage=memory",
+                "-j=8",
             },
             on_attach = on_attach,
         })

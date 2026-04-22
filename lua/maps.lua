@@ -9,7 +9,7 @@ local function map(mode, lhs, rhs, opts)
 end
 
 -- detect the operating system
-local is_windows = vim.loop.os_uname().version:match("Windows")
+local is_windows = vim.uv.os_uname().version:match("Windows")
 
 -- ---- General Vim Stuff
 -- clear highlights
@@ -111,7 +111,7 @@ map("n", "<leader>fc", "<cmd>Telescope git commits<cr>", { desc = "Find todos" }
 map("n", "<leader>fr", "<cmd>Telescope lsp_references<cr>", { desc = "Get references - Telescope" })
 -- keybinding to access the .config/nvim directory
 map("n", "<leader>cn", function()
-    local home = vim.loop.os_homedir()
+    local home = vim.uv.os_homedir()
     local nvim_config_path = is_windows and
         (home .. "\\AppData\\Local\\nvim") or
         (home .. "/.config/nvim")
@@ -127,3 +127,6 @@ end, { desc = "Fuzzy find Neovim config files" })
 
 -- ---- ToggleTerm
 map("n", "<leader>ty", "<cmd>ToggleTerm<CR>", { desc = "Toggle terminal" })
+
+-- ---- Claude Code
+map("n", "<leader>cl", "<cmd>ClaudeToggle<CR>", { desc = "Toggle Claude Code" })

@@ -1,9 +1,11 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
-  event = { "BufReadPost", "BufNewFile" },
+  lazy = false,
   config = function()
-    require("nvim-treesitter.configs").setup({
+    local ok, configs = pcall(require, "nvim-treesitter.configs")
+    if not ok then return end
+    configs.setup({
       ensure_installed = {
         "lua",
         "python",

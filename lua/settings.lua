@@ -25,8 +25,20 @@ o.syntax = "on"     -- When this option is set, the syntax with this name is loa
 o.tabstop = 4       -- Number of spaces that a <Tab> in the file counts for.
 o.termguicolors = true
 o.title = true      -- When on, the title of the window will be set to the value of 'titlestring'
-o.ttimeoutlen = 0   -- The time in milliseconds that is waited for a key code or mapped key sequence to complete.
+-- Setting ttimeoutlen too low caused wierd auto_session state restoration in WSL. Used to use 0, but had to 
+-- go up to 5 to resort that issues.
+o.ttimeoutlen = 5   -- The time in milliseconds that is waited for a key code or mapped key sequence to complete.
 o.wildmenu = true   -- When 'wildmenu' is on, command-line completion operates in an enhanced mode.
 o.wrap = false
 
-vim.api.nvim_set_option("clipboard", "unnamed")
+o.clipboard = "unnamed"
+
+-- Prevents :q from failing with "unsaved changes" when opening nvim with no file
+-- and accidentally trying to modifying the blank no name buffer.
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    if vim.fn.argc() == 0 and vim.api.nvim_buf_get_name(0) == "" then
+      vim.bo.modifiable = false
+    end
+  end,
+})

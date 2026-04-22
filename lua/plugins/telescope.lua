@@ -1,14 +1,13 @@
 return
 {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.6",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
         local telescope = require("telescope")
         local actions = require("telescope.actions")
 
         -- Detect the operating system
-        local is_windows = vim.loop.os_uname().version:match("Windows")
+        local is_windows = vim.uv.os_uname().version:match("Windows")
 
         -- Set file ignore patterns based on the platform
         local ignore_patterns = is_windows and
@@ -50,6 +49,9 @@ return
                 {
                     file_ignore_patterns = ignore_patterns,
                     path_display = { "filename_first" },
+                    preview = {
+                        treesitter = false,
+                    },
                     mappings = {
                         -- i = {                              -- Insert mode mappings
                         --     ["<leader>q"] = actions.close, -- Custom close command

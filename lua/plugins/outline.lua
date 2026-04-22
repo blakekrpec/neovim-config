@@ -5,9 +5,9 @@ return {
             outline_window = {
                 preview = true,        -- show symbol preview
                 auto_close = true,     -- close outline when symbol selected
-                width = 25,
+                width = 35,
                 relative_width = true, -- use width as %, not num of cols
-                min_width = 25,        -- ensure window is at least this cols wide
+                min_width = 35,        -- ensure window is at least this cols wide
             },
             outline_items = {
                 show_symbol_lineno = true,

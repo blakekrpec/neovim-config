@@ -14,7 +14,24 @@
 
 #### **Ubuntu**
 
-* Download Neovim, and Extract:
+**Option A — Setup script (recommended)**
+
+Clone the repo first, then run the setup script. It installs Neovim, Node.js, python3-venv, unzip, and a Nerd Font in one shot:
+
+```bash
+cd ~/.config
+git clone git@github.com:blakekrpec/neovim-config.git nvim
+bash ~/.config/nvim/scripts/setup.sh
+```
+
+Pass `--install-vstuc` if you need Unity debugging support:
+
+```bash
+bash ~/.config/nvim/scripts/setup.sh --install-vstuc
+```
+
+**Option B — Manual Neovim install only**
+
 ```bash
 curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz
 tar -xzf nvim-linux-x86_64.tar.gz
@@ -22,10 +39,14 @@ sudo mv nvim-linux-x86_64 /usr/local/bin/
 sudo ln -s /usr/local/bin/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim
 rm nvim-linux-x86_64.tar.gz
 ```
-* Verify installation:
+
+Verify installation:
 ```
 nvim --version
 ```
+
+> **Note:** With a manual install you'll likely need to install additional dependencies for this config (Node.js, python3-venv, unzip, Nerd Font, etc.). See the [Trouble Shooting/Notes](#trouble-shootingnotes) section below or [`scripts/setup.sh`](scripts/setup.sh) for guidance.
+
 #### **Windows**
 
 * Go to the [Neovim GitHub Releases](https://github.com/neovim/neovim/releases). Download the `nvim-win64.msi` file from the latest release.
@@ -63,3 +84,4 @@ Run `nvim -- --no-session` to start `nvim` with `auto-session` disabled.
 - [Mason Not Installing cmake on Windows](docs/MASON_CMAKE_WINDOWS.md)
 - [How to Install LLVM on Windows 11](docs/LLVM_WIN11.md)
 - [Mason Not Installing on Ubuntu (missing unzip)](docs/MASON_UNZIP_UBUNTU.md)
+- [Copilot Chat: Could not determine Node.js version](docs/NODEJS_COPILOT.md)
