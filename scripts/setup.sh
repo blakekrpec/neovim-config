@@ -127,7 +127,26 @@ EOF
 done
 
 # ---------------------------------------------------------------------------
-# 5. Nerd Font (0xProto) — used for fancy icons in nvim
+# 5. Claude Code CLI (required by lua/plugins/claude-code.lua)
+# ---------------------------------------------------------------------------
+header "Installing Claude Code CLI"
+# docs/CLAUDE_CODE.md — claudecode.nvim connects to the `claude` CLI over the
+# official IDE extension protocol. On first run inside nvim, `claude` will
+# prompt for auth (browser OAuth or ANTHROPIC_API_KEY). Credentials are
+# stored under ~/.claude/ and never touch this repo.
+if command -v claude &>/dev/null; then
+    success "claude already installed: $(claude --version 2>/dev/null | head -1)"
+else
+    if command -v npm &>/dev/null; then
+        npm install -g @anthropic-ai/claude-code
+        success "claude installed: $(claude --version 2>/dev/null | head -1)"
+    else
+        warn "npm not found — skipping claude install. Re-run after Node.js is on PATH."
+    fi
+fi
+
+# ---------------------------------------------------------------------------
+# 6. Nerd Font (0xProto) — used for fancy icons in nvim
 # ---------------------------------------------------------------------------
 header "Installing 0xProto Nerd Font"
 # docs/NERD_FONT.md — without a Nerd Font installed, icons appear as ◆? diamonds.
@@ -153,7 +172,7 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# 6. vstuc dlls — only installed when --install-vstuc flag is passed
+# 7. vstuc dlls — only installed when --install-vstuc flag is passed
 # ---------------------------------------------------------------------------
 header "Unity Debugging: vstuc dlls"
 # docs/UNITY_DEBUG.md — nvim-dap Unity debugging requires two dlls from vstuc.

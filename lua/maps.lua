@@ -128,5 +128,29 @@ end, { desc = "Fuzzy find Neovim config files" })
 -- ---- ToggleTerm
 map("n", "<leader>ty", "<cmd>ToggleTerm<CR>", { desc = "Toggle terminal" })
 
--- ---- Claude Code
-map("n", "<leader>cl", "<cmd>ClaudeToggle<CR>", { desc = "Toggle Claude Code" })
+-- ---- Terminal
+map("t", "jj", "<C-\\><C-n>", { desc = "Exit terminal mode to normal" })
+
+-- ---- Claude Code (coder/claudecode.nvim — VSCode-style IDE integration)
+-- Toggle the Claude terminal on the right side.
+map("n", "<leader>ac", "<cmd>ClaudeCode<CR>", { desc = "Toggle Claude Code" })
+-- Focus/jump to Claude without toggling it off if it's already visible.
+map("n", "<leader>af", "<cmd>ClaudeCodeFocus<CR>", { desc = "Focus Claude Code" })
+-- Send the current visual selection to Claude as an @-mention block.
+map("v", "<leader>as", "<cmd>ClaudeCodeSend<CR>", { desc = "Send selection to Claude" })
+-- Add the current buffer to Claude's context (normal mode, no selection).
+map("n", "<leader>ab", "<cmd>ClaudeCodeAdd %<CR>", { desc = "Add current buffer to Claude" })
+-- Accept / deny the diff Claude is proposing in the review split.
+map("n", "<leader>ay", function()
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+        local buf = vim.api.nvim_win_get_buf(win)
+        if vim.b[buf].claudecode_diff_tab_name then
+            vim.api.nvim_set_current_win(win)
+            vim.cmd("ClaudeCodeDiffAccept")
+            vim.schedule(function() pcall(vim.cmd, "ClaudeCodeFocus") end)
+            return
+        end
+    end
+    vim.notify("No active Claude diff found", vim.log.levels.WARN)
+end, { desc = "Accept Claude diff" })
+map("n", "<leader>an", "<cmd>ClaudeCodeDiffDeny<CR>",   { desc = "Deny Claude diff" })

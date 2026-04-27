@@ -30,8 +30,17 @@ o.title = true      -- When on, the title of the window will be set to the value
 o.ttimeoutlen = 5   -- The time in milliseconds that is waited for a key code or mapped key sequence to complete.
 o.wildmenu = true   -- When 'wildmenu' is on, command-line completion operates in an enhanced mode.
 o.wrap = false
+o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,t:ver25"
+o.autoread = true  -- reload files changed outside nvim
 
 o.clipboard = "unnamed"
+
+-- Check for external file changes whenever nvim regains focus or a buffer is entered.
+-- autoread alone won't fire without this trigger.
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+    pattern = "*",
+    command = "checktime",
+})
 
 -- Prevents :q from failing with "unsaved changes" when opening nvim with no file
 -- and accidentally trying to modifying the blank no name buffer.

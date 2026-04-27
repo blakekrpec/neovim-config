@@ -85,3 +85,5 @@ Run `nvim -- --no-session` to start `nvim` with `auto-session` disabled.
 - [How to Install LLVM on Windows 11](docs/LLVM_WIN11.md)
 - [Mason Not Installing on Ubuntu (missing unzip)](docs/MASON_UNZIP_UBUNTU.md)
 - [Copilot Chat: Could not determine Node.js version](docs/NODEJS_COPILOT.md)
+- [Copilot: Authentication](docs/COPILOT_AUTH.md)
+- [Claude Code: Setup & Authentication](docs/CLAUDE_CODE.md)
