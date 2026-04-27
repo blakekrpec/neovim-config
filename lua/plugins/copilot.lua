@@ -1,11 +1,3 @@
--- Only load Copilot on Linux/Unix systems. More work needed to get this work
--- on Windows. On Windows need to get make installed and on path, or make the 
--- build make tiktoken arg only apply on Linux. Also need Node.js installed and 
--- on path for Windows. For now only setup Copilot on Linux/Unix to avoid errors on Windows.
-if vim.fn.has('win32') == 1 then
-    return {}
-end
-
 return {
     {
         'zbirenbaum/copilot.lua',
@@ -37,7 +29,6 @@ return {
             { 'zbirenbaum/copilot.lua' },
             { 'nvim-lua/plenary.nvim' },
         },
-        build = 'make tiktoken',
         cmd = {
             'CopilotChat',
             'CopilotChatOpen',

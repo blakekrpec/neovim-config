@@ -3,7 +3,7 @@ local opts = {
     focus_after_send = true,   -- jump to Claude terminal after ClaudeCodeSend
     terminal = {
         split_side = 'right',
-        split_width_percentage = 0.40,
+        split_width_percentage = 0.50,
         provider = 'native',
         auto_close = true,
     },

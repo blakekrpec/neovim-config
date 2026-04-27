@@ -49,9 +49,31 @@ nvim --version
 
 #### **Windows**
 
+**Option A — Setup script (recommended)**
+
+Clone the repo first, then run the setup script. It downloads Neovim directly from the GitHub stable release (guaranteeing 0.10+), installs Node.js via `winget`, and sets up Claude Code and a Nerd Font:
+
+```powershell
+cd $env:LOCALAPPDATA
+git clone git@github.com:blakekrpec/neovim-config.git nvim
+powershell -ExecutionPolicy Bypass -File $env:LOCALAPPDATA\nvim\scripts\setup.ps1
+```
+
+Pass `-InstallVstuc` if you need Unity debugging support:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File $env:LOCALAPPDATA\nvim\scripts\setup.ps1 -InstallVstuc
+```
+
+> **Note:** `winget` ships with Windows 10/11. If it's missing, install **App Installer** from the Microsoft Store.
+
+**Option B — Manual Neovim install only**
+
 * Go to the [Neovim GitHub Releases](https://github.com/neovim/neovim/releases). Download the `nvim-win64.msi` file from the latest release.
 
 * Run the downloaded `nvim-win64.msi` file. Follow the prompts in the installer to complete the installation.
+
+> **Note:** With a manual install you'll likely need to install additional dependencies for this config (Node.js, Claude Code, Nerd Font, etc.). See the [Trouble Shooting/Notes](#trouble-shootingnotes) section below or [`scripts/setup.ps1`](scripts/setup.ps1) for guidance.
 
 ### **Configure Neovim**
 
