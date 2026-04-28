@@ -40,13 +40,6 @@ return {
             'CopilotChatDocs',
             'CopilotChatTests',
         },
-        keys = {
-            { '<leader>cc', '<cmd>CopilotChatToggle<cr>', desc = 'Toggle Copilot Chat' },
-            { '<leader>ce', '<cmd>CopilotChatExplain<cr>', mode = 'v', desc = 'Explain selection' },
-            { '<leader>cr', '<cmd>CopilotChatReview<cr>', mode = 'v', desc = 'Review selection' },
-            { '<leader>cf', '<cmd>CopilotChatFix<cr>', mode = 'v', desc = 'Fix selection' },
-            { '<leader>co', '<cmd>CopilotChatOptimize<cr>', mode = 'v', desc = 'Optimize selection' },
-        },
         config = function()
             require('CopilotChat').setup({})
         end

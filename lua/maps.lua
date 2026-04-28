@@ -125,6 +125,13 @@ map("n", "<leader>cn", function()
     )
 end, { desc = "Fuzzy find Neovim config files" })
 
+-- ---- Copilot Chat
+map("n", "<leader>cc", "<cmd>CopilotChatToggle<cr>", { desc = "Toggle Copilot Chat" })
+map("v", "<leader>ce", "<cmd>CopilotChatExplain<cr>", { desc = "Explain selection" })
+map("v", "<leader>cr", "<cmd>CopilotChatReview<cr>", { desc = "Review selection" })
+map("v", "<leader>cf", "<cmd>CopilotChatFix<cr>", { desc = "Fix selection" })
+map("v", "<leader>co", "<cmd>CopilotChatOptimize<cr>", { desc = "Optimize selection" })
+
 -- ---- ToggleTerm
 map("n", "<leader>ty", "<cmd>ToggleTerm<CR>", { desc = "Toggle terminal" })
 

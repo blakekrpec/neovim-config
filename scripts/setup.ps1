@@ -1,4 +1,4 @@
-# setup.ps1 — Windows setup for blakekrpec/neovim-config
+# setup.ps1 - Windows setup for blakekrpec/neovim-config
 # Run this after cloning the repo to install all required dependencies.
 # See docs/ for details on what some of the steps are doing and why.
 #
@@ -32,7 +32,7 @@ function Refresh-Path {
 }
 
 # ---------------------------------------------------------------------------
-# 1. Neovim (stable) — downloaded directly from GitHub releases
+# 1. Neovim (stable) - downloaded directly from GitHub releases
 # ---------------------------------------------------------------------------
 Write-Header "Installing Neovim (stable)"
 # Download from GitHub stable release to guarantee 0.10+ rather than
@@ -68,7 +68,7 @@ if (Test-Cmd "nvim") {
 # 2. Node.js v22+ (required by copilot.lua)
 # ---------------------------------------------------------------------------
 Write-Header "Installing Node.js v22+"
-# docs/NODEJS_COPILOT.md — copilot.lua requires Node.js v22 or newer.
+# docs/NODEJS_COPILOT.md - copilot.lua requires Node.js v22 or newer.
 $nodeOk = $false
 if (Test-Cmd "node") {
     $nodeVer = node --version 2>$null
@@ -77,7 +77,7 @@ if (Test-Cmd "node") {
         Write-Ok "Node.js $nodeVer already satisfies v22+ requirement"
         $nodeOk = $true
     } else {
-        Write-Info "Node.js $nodeVer is older than v22 — upgrading..."
+        Write-Info "Node.js $nodeVer is older than v22 - upgrading..."
     }
 }
 
@@ -88,7 +88,7 @@ if (-not $nodeOk) {
         Refresh-Path
         Write-Ok "Node.js installed: $(node --version 2>$null)"
     } else {
-        Write-Warn "winget not found — install Node.js v22+ manually from https://nodejs.org"
+        Write-Warn "winget not found - install Node.js v22+ manually from https://nodejs.org"
     }
 }
 
@@ -96,24 +96,26 @@ if (-not $nodeOk) {
 # 3. Claude Code CLI (required by lua/plugins/claude-code.lua)
 # ---------------------------------------------------------------------------
 Write-Header "Installing Claude Code CLI"
-# docs/CLAUDE_CODE.md — claudecode.nvim connects to the `claude` CLI over the
-# official IDE extension protocol. On first run inside nvim, `claude` will
+# docs/CLAUDE_CODE.md - claudecode.nvim connects to the 'claude' CLI over the
+# official IDE extension protocol. On first run inside nvim, 'claude' will
 # prompt for auth (browser OAuth or ANTHROPIC_API_KEY). Credentials are
 # stored under ~/.claude/ and never touch this repo.
 if (Test-Cmd "claude") {
     Write-Ok "claude already installed: $(claude --version 2>$null | Select-Object -First 1)"
-} elseif (Test-Cmd "npm") {
-    npm install -g @anthropic-ai/claude-code
-    Write-Ok "claude installed"
 } else {
-    Write-Warn "npm not found — skipping claude install. Re-run after Node.js is on PATH."
+    if (Test-Cmd "npm") {
+        npm install -g @anthropic-ai/claude-code
+        Write-Ok "claude installed"
+    } else {
+        Write-Warn "npm not found - skipping claude install. Re-run after Node.js is on PATH."
+    }
 }
 
 # ---------------------------------------------------------------------------
-# 4. Nerd Font (0xProto) — used for fancy icons in nvim
+# 4. Nerd Font (0xProto) - used for fancy icons in nvim
 # ---------------------------------------------------------------------------
 Write-Header "Installing 0xProto Nerd Font"
-# docs/NERD_FONT.md — without a Nerd Font the icons appear as ◆? diamonds.
+# docs/NERD_FONT.md - without a Nerd Font the icons appear as ? diamonds.
 if ($NoFonts) {
     Write-Info "Skipping Nerd Font install (-NoFonts)"
 } else {
@@ -152,12 +154,16 @@ if ($NoFonts) {
 }
 
 # ---------------------------------------------------------------------------
-# 5. vstuc dlls — only installed when -InstallVstuc flag is passed
+# 5. vstuc dlls - only installed when -InstallVstuc flag is passed
 # ---------------------------------------------------------------------------
 Write-Header "Unity Debugging: vstuc dlls"
-# docs/UNITY_DEBUG.md — nvim-dap Unity debugging requires two dlls from vstuc.
+# docs/UNITY_DEBUG.md - nvim-dap Unity debugging requires two dlls from vstuc.
 # Pass -InstallVstuc to enable (e.g. on a Unity dev machine).
-$nvimData = if ($env:XDG_DATA_HOME) { $env:XDG_DATA_HOME } else { "$env:LOCALAPPDATA\nvim-data" }
+if ($env:XDG_DATA_HOME) {
+    $nvimData = $env:XDG_DATA_HOME
+} else {
+    $nvimData = "$env:LOCALAPPDATA\nvim-data"
+}
 $vstucDir = Join-Path $nvimData "vstuc"
 
 if ($InstallVstuc) {
@@ -165,25 +171,16 @@ if ($InstallVstuc) {
         Write-Ok "vstuc already present at $vstucDir"
     } else {
         New-Item -ItemType Directory -Force -Path $nvimData | Out-Null
-        $gzPath   = Join-Path $nvimData "vstuc.vsix.gz"
-        $vsixPath = Join-Path $nvimData "vstuc.vsix"
+        $zipPath = Join-Path $nvimData "vstuc.zip"
 
         Write-Info "Downloading vstuc..."
         Invoke-WebRequest `
             -Uri "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioToolsForUnity/vsextensions/vstuc/1.1.0/vspackage" `
-            -OutFile $gzPath
+            -OutFile $zipPath
 
-        Write-Info "Decompressing vstuc archive..."
-        $gzStream  = [System.IO.File]::OpenRead($gzPath)
-        $outStream = [System.IO.File]::Create($vsixPath)
-        $gz = New-Object System.IO.Compression.GZipStream(
-            $gzStream, [System.IO.Compression.CompressionMode]::Decompress)
-        $gz.CopyTo($outStream)
-        $gz.Dispose(); $outStream.Dispose(); $gzStream.Dispose()
-        Remove-Item $gzPath
-
-        Expand-Archive -Path $vsixPath -DestinationPath $vstucDir -Force
-        Remove-Item $vsixPath
+        Write-Info "Extracting vstuc..."
+        Expand-Archive -Path $zipPath -DestinationPath $vstucDir -Force
+        Remove-Item $zipPath
         Write-Ok "vstuc extracted to $vstucDir"
     }
 } else {
