@@ -132,6 +132,9 @@ map("v", "<leader>cr", "<cmd>CopilotChatReview<cr>", { desc = "Review selection"
 map("v", "<leader>cf", "<cmd>CopilotChatFix<cr>", { desc = "Fix selection" })
 map("v", "<leader>co", "<cmd>CopilotChatOptimize<cr>", { desc = "Optimize selection" })
 
+-- ---- Render Markdown
+map("n", "<leader>rm", "<cmd>RenderMarkdown toggle<CR>", { desc = "Toggle markdown rendering" })
+
 -- ---- ToggleTerm
 map("n", "<leader>ty", "<cmd>ToggleTerm<CR>", { desc = "Toggle terminal" })
 
