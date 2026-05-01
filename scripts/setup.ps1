@@ -167,6 +167,28 @@ if ($env:XDG_DATA_HOME) {
 $vstucDir = Join-Path $nvimData "vstuc"
 
 if ($InstallVstuc) {
+    # .NET SDK (required by OmniSharp — docs/UNITY_OMNISHARP.md)
+    $dotnetOk = $false
+    if (Test-Cmd "dotnet") {
+        $dotnetVer   = dotnet --version 2>$null
+        $dotnetMajor = [int]($dotnetVer -replace '^(\d+)\..*', '$1')
+        if ($dotnetMajor -ge 8) {
+            Write-Ok ".NET SDK $dotnetVer already satisfies v8+ requirement"
+            $dotnetOk = $true
+        }
+    }
+    if (-not $dotnetOk) {
+        Write-Info "Installing .NET SDK 8..."
+        if (Test-Cmd "winget") {
+            winget install --id Microsoft.DotNet.SDK.8 --source winget --silent `
+                --accept-package-agreements --accept-source-agreements
+            Refresh-Path
+            Write-Ok ".NET SDK installed: $(dotnet --version 2>$null)"
+        } else {
+            Write-Warn "winget not found - install .NET SDK 8+ manually from https://aka.ms/dotnet/download"
+        }
+    }
+
     if (Test-Path $vstucDir) {
         Write-Ok "vstuc already present at $vstucDir"
     } else {
