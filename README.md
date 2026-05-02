@@ -98,7 +98,7 @@ Run `nvim -- --no-session` to start `nvim` with `auto-session` disabled.
 ## **Trouble Shooting/Notes**
 
 - [Setting Up Unity Debugging](docs/UNITY_DEBUG.md)
-- [OmniSharp with Unity (setup & "No .NET SDKs were found")](docs/UNITY_OMNISHARP.md)
+- [OmniSharp with Unity (setup, :GenUnitySln, "No .NET SDKs were found")](docs/UNITY_OMNISHARP.md)
 - [Symbols Showing as Diamonds with ?](docs/NERD_FONT.md)
 - [Mason Not Installing pylsp on Ubuntu ](docs/PYLSP_UBUNTU_ISSUE.md)
 - [Mason Not finding Python on Windows](docs/MASON_PYTHON_WINDOWS.md)
