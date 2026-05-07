@@ -11,6 +11,7 @@ return {
         "python",
         "cpp",
         "c_sharp",
+        "dockerfile",
       },
       highlight = {
         enable = true,

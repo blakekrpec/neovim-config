@@ -49,9 +49,11 @@ return {
             automatic_installation = true,
             ensure_installed = {
                 "clangd",
-                "neocmake",
+                "docker_compose_language_service",
+                "dockerls",
                 "lua_ls",
                 "marksman",
+                "neocmake",
                 "omnisharp",
                 "pylsp",
             },

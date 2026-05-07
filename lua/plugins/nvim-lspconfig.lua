@@ -85,6 +85,7 @@ return {
         -- Create ClangdSwitchSourceHeader command (not auto-created with vim.lsp.config)
         vim.api.nvim_create_user_command("ClangdSwitchSourceHeader", function()
             local params = { uri = vim.uri_from_bufnr(0) }
+---@diagnostic disable-next-line: param-type-mismatch
             vim.lsp.buf_request(0, "textDocument/switchSourceHeader", params, function(err, result)
                 if err then
                     vim.notify("Error switching source/header: " .. tostring(err), vim.log.levels.ERROR)
@@ -139,6 +140,15 @@ return {
             },
         })
 
+        -- Docker
+        vim.lsp.config("dockerls", {
+            filetypes = { "dockerfile" },
+        })
+
+        vim.lsp.config("docker_compose_language_service", {
+            filetypes = { "yaml.docker-compose" },
+        })
+
         -- CMake
         vim.lsp.config("neocmake", {
             cmd = { "neocmakelsp", "stdio" },
@@ -160,9 +170,11 @@ return {
         -- Enable all configured servers (required in Neovim 0.11+)
         vim.lsp.enable({
             "clangd",
-            "neocmake",
+            "docker_compose_language_service",
+            "dockerls",
             "lua_ls",
             "marksman",
+            "neocmake",
             "omnisharp",
             "pylsp",
         })
