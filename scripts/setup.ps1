@@ -167,6 +167,32 @@ if ($env:XDG_DATA_HOME) {
 $vstucDir = Join-Path $nvimData "vstuc"
 
 if ($InstallVstuc) {
+    # .NET SDK (required by OmniSharp — docs/UNITY_OMNISHARP.md)
+    $dotnetOk = $false
+    # Run in a child scope so NativeCommandError from a broken/missing dotnet
+    # doesn't trip $ErrorActionPreference = 'Stop' in PS 5.1.
+    $dotnetVer = & { $ErrorActionPreference = 'SilentlyContinue'; dotnet --version 2>&1 | Select-Object -First 1 }
+    $dotnetMajor = ($dotnetVer -replace '^(\d+)\..*', '$1') -as [int]
+    if ($dotnetMajor -ge 8) {
+        Write-Ok ".NET SDK $dotnetVer already satisfies v8+ requirement"
+        $dotnetOk = $true
+    }
+    if (-not $dotnetOk) {
+        Write-Info "Installing .NET SDK 10..."
+        if (Test-Cmd "winget") {
+            winget install --id Microsoft.DotNet.SDK.10 --source winget --silent `
+                --accept-package-agreements --accept-source-agreements
+            Refresh-Path
+            if (Test-Cmd "dotnet") {
+                Write-Ok ".NET SDK installed: $(dotnet --version 2>$null)"
+            } else {
+                Write-Warn ".NET SDK installed - restart your terminal for 'dotnet' to appear on PATH"
+            }
+        } else {
+            Write-Warn "winget not found - install .NET SDK 10+ manually from https://aka.ms/dotnet/download"
+        }
+    }
+
     if (Test-Path $vstucDir) {
         Write-Ok "vstuc already present at $vstucDir"
     } else {

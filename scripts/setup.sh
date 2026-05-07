@@ -181,6 +181,33 @@ NVIM_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/nvim"
 VSTUC_DIR="$NVIM_DATA/vstuc"
 
 if [ "$INSTALL_VSTUC" = true ]; then
+    # .NET SDK (required by C# LSP  — docs/UNITY_OMNISHARP.md)
+    DOTNET_OK=false
+    if command -v dotnet &>/dev/null; then
+        DOTNET_MAJOR=$(dotnet --version 2>/dev/null | sed 's/\([0-9]*\)\..*/\1/' || echo 0)
+        if [ "${DOTNET_MAJOR:-0}" -ge 8 ] 2>/dev/null; then
+            success ".NET SDK $(dotnet --version) already satisfies v8+ requirement"
+            DOTNET_OK=true
+        fi
+    fi
+    if [ "$DOTNET_OK" = false ]; then
+        info "Installing .NET SDK 10..."
+        if ! sudo apt-get install -y dotnet-sdk-8.0 &>/dev/null; then
+            UBUNTU_VER=$(lsb_release -rs 2>/dev/null || echo "22.04")
+            wget -q "https://packages.microsoft.com/config/ubuntu/${UBUNTU_VER}/packages-microsoft-prod.deb" \
+                -O /tmp/packages-microsoft-prod.deb
+            sudo dpkg -i /tmp/packages-microsoft-prod.deb
+            rm /tmp/packages-microsoft-prod.deb
+            sudo apt-get update -qq
+            sudo apt-get install -y dotnet-sdk-10.0
+        fi
+        if command -v dotnet &>/dev/null; then
+            success ".NET SDK installed: $(dotnet --version)"
+        else
+            warn ".NET SDK installed — restart your terminal for 'dotnet' to appear on PATH"
+        fi
+    fi
+
     if [ -d "$VSTUC_DIR" ]; then
         success "vstuc already present at $VSTUC_DIR"
     else

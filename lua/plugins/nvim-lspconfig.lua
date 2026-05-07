@@ -124,7 +124,6 @@ return {
 
         -- C#
         vim.lsp.config("omnisharp", {
-            cmd = { "omnisharp" },
             settings = {
                 omnisharp = {
                     fileOptions = {

@@ -84,6 +84,82 @@ local function request(tbl)
     uv.run()
 end
 
+-- Generate a .sln for the current Unity project using dotnet CLI
+function M.gen_sln()
+    if vim.fn.executable('dotnet') == 0 then
+        vim.notify('GenUnitySln: dotnet not found in PATH. Install .NET SDK 8+.', vim.log.levels.ERROR)
+        return
+    end
+
+    local project_path = M.find_project_path()
+    if project_path == '' then
+        vim.notify('GenUnitySln: not inside a Unity project (no Assets/ directory found)', vim.log.levels.ERROR)
+        return
+    end
+
+    local existing = vim.fn.glob(project_path .. '/*.sln', false, true)
+    vim.list_extend(existing, vim.fn.glob(project_path .. '/*.slnx', false, true))
+    if #existing > 0 then
+        vim.notify('GenUnitySln: solution already exists: ' .. vim.fn.fnamemodify(existing[1], ':t'), vim.log.levels.WARN)
+        return
+    end
+
+    local csproj_files = vim.fn.glob(project_path .. '/*.csproj', false, true)
+    if #csproj_files == 0 then
+        vim.notify(
+            'GenUnitySln: no .csproj files found in project root.\n' ..
+            'In Unity: Preferences > External Tools > Regenerate Project Files',
+            vim.log.levels.ERROR
+        )
+        return
+    end
+
+    local project_name = vim.fn.fnamemodify(project_path, ':t')
+    vim.notify('GenUnitySln: creating ' .. project_name .. '.sln...', vim.log.levels.INFO)
+
+    vim.system(
+        { 'dotnet', 'new', 'sln', '--name', project_name },
+        { text = true, cwd = project_path },
+        function(create)
+            vim.schedule(function()
+                if create.code ~= 0 then
+                    vim.notify('GenUnitySln: dotnet new sln failed:\n' .. (create.stderr or ''), vim.log.levels.ERROR)
+                    return
+                end
+
+                local sln_files = vim.fn.glob(project_path .. '/*.sln', false, true)
+                vim.list_extend(sln_files, vim.fn.glob(project_path .. '/*.slnx', false, true))
+                if #sln_files == 0 then
+                    vim.notify('GenUnitySln: solution file not found after creation', vim.log.levels.ERROR)
+                    return
+                end
+
+                local add_cmd = { 'dotnet', 'sln', sln_files[1], 'add' }
+                vim.list_extend(add_cmd, csproj_files)
+
+                vim.system(add_cmd, { text = true, cwd = project_path }, function(add)
+                    vim.schedule(function()
+                        if add.code ~= 0 then
+                            vim.notify('GenUnitySln: dotnet sln add failed:\n' .. (add.stderr or ''), vim.log.levels.ERROR)
+                            return
+                        end
+
+                        vim.notify(
+                            string.format('GenUnitySln: created %s.sln with %d project(s)', project_name, #csproj_files),
+                            vim.log.levels.INFO
+                        )
+
+                        for _, client in ipairs(vim.lsp.get_clients({ name = 'omnisharp' })) do
+                            vim.lsp.stop_client(client.id)
+                        end
+                        vim.cmd('edit')
+                    end)
+                end)
+            end)
+        end
+    )
+end
+
 -- Setup user commands
 function M.setup()
     local functionTbl = {
@@ -98,6 +174,10 @@ function M.setup()
             request({ Type = v, Value = '' })
         end, {})
     end
+
+    vim.api.nvim_create_user_command('GenUnitySln', function()
+        M.gen_sln()
+    end, { desc = 'Generate a .sln for the current Unity project from existing .csproj files' })
 
     -- Check for DLLs and notify the user
     local found_probe_dll, found_debug_dll = find_vstuc()
