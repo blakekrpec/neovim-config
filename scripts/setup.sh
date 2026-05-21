@@ -59,8 +59,15 @@ else
     if dpkg -s "$VENV_PKG" &>/dev/null; then
         success "$VENV_PKG already installed"
     else
-        sudo apt-get install -y "$VENV_PKG"
-        success "$VENV_PKG installed"
+        sudo apt update
+        # Try version-specific package first, fall back to generic python3-venv
+        if ! sudo apt-get install -y "$VENV_PKG" 2>/dev/null; then
+            warn "$VENV_PKG not available, installing python3-venv instead"
+            sudo apt-get install -y python3-venv
+            success "python3-venv installed (compatible with Python $PYTHON_VERSION)"
+        else
+            success "$VENV_PKG installed"
+        fi
     fi
 fi
 
@@ -102,11 +109,14 @@ export NVM_DIR
 # shellcheck source=/dev/null
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
 
-NODE_MAJOR=$(node --version 2>/dev/null | sed 's/v\([0-9]*\).*/\1/' || echo 0)
-if [ "$NODE_MAJOR" -ge 22 ] 2>/dev/null; then
-    success "Node.js $(node --version) already satisfies v22+ requirement"
+# Only count nvm-managed node — a system node installed via apt/sudo won't
+# let Claude Code auto-update, so we always ensure nvm has its own install.
+NVM_NODE_MAJOR=$(NVM_DIR="$NVM_DIR" bash -c '. "$NVM_DIR/nvm.sh"; nvm which current 2>/dev/null' \
+    | xargs -I{} {} --version 2>/dev/null | sed 's/v\([0-9]*\).*/\1/' || echo 0)
+if [ "$NVM_NODE_MAJOR" -ge 22 ] 2>/dev/null; then
+    success "Node.js $(node --version) already satisfies v22+ (nvm-managed)"
 else
-    info "Installing Node.js LTS (v22+)..."
+    info "Installing Node.js LTS (v22+) via nvm..."
     nvm install --lts
     nvm use --lts
     success "Node.js $(node --version) installed"

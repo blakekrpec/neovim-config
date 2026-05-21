@@ -35,6 +35,9 @@ o.autoread = true  -- reload files changed outside nvim
 
 o.clipboard = "unnamed"
 
+-- Set global terminal scrollback buffer size
+vim.g.terminal_scrollback_buffer_size = 100000
+
 -- Check for external file changes whenever nvim regains focus or a buffer is entered.
 -- autoread alone won't fire without this trigger.
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {

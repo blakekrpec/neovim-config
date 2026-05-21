@@ -62,13 +62,13 @@ map("n", "<leader>ls", ":Lazy sync<CR>", { desc = "Sync Lazy.nvim plugins" })
 
 -- ---- LSP, Trouble
 -- see code action
-map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap=true, silent=true, desc = "LSP Code Action" })
+map("n", "<leader>ka", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap=true, silent=true, desc = "LSP Code Action" })
 -- go-to-declaration
-map("n", "<leader>gD", function()
+map("n", "<leader>kD", function()
   require("trouble").open("lsp_declarations")
 end, { desc = "Go to declaration - Trouble" })
 -- go-to-definition
-map("n", "<leader>gd", function()
+map("n", "<leader>kd", function()
   require("trouble").open("lsp_definitions")
 end, { desc = "Go to definition - Trouble" })
 -- hover
@@ -76,7 +76,7 @@ map("n", "<leader>K", '<cmd>lua vim.lsp.buf.hover()<CR>', { desc = "Hover inform
 -- rename symbol
 map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "Rename symbol" })
 -- show references with Trouble
-map("n", "<leader>gr", function()
+map("n", "<leader>kr", function()
   require("trouble").open("lsp_references")
 end, { desc = "Get references - Trouble" })
 -- show document diagnostics with Trouble
@@ -125,6 +125,25 @@ map("n", "<leader>cn", function()
     )
 end, { desc = "Fuzzy find Neovim config files" })
 
+-- ---- Git (gitsigns + diffview)
+-- hunk navigation
+map("n", "<leader>gj", function() require("gitsigns").nav_hunk("next") end, { desc = "Next git hunk" })
+map("n", "<leader>gk", function() require("gitsigns").nav_hunk("prev") end, { desc = "Prev git hunk" })
+-- stage / unstage / reset
+map("n", "<leader>gs", function() require("gitsigns").stage_hunk() end, { desc = "Stage hunk" })
+map("v", "<leader>gs", function() require("gitsigns").stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, { desc = "Stage selected hunks" })
+map("n", "<leader>gu", function() require("gitsigns").undo_stage_hunk() end, { desc = "Undo stage hunk" })
+map("n", "<leader>gR", function() require("gitsigns").reset_hunk() end, { desc = "Reset hunk" })
+-- inline preview & blame
+map("n", "<leader>gp", function() require("gitsigns").preview_hunk() end, { desc = "Preview hunk" })
+map("n", "<leader>gb", function() require("gitsigns").toggle_current_line_blame() end, { desc = "Toggle line blame" })
+-- diffview: open/close source-control panel
+map("n", "<leader>gv", "<cmd>DiffviewOpen<CR>", { desc = "Open Diffview (changed files)" })
+map("n", "<leader>gx", "<cmd>DiffviewClose<CR>", { desc = "Close Diffview" })
+-- diffview: history
+map("n", "<leader>gl", "<cmd>DiffviewFileHistory %<CR>", { desc = "File git history" })
+map("n", "<leader>gL", "<cmd>DiffviewFileHistory<CR>", { desc = "Repo git history" })
+
 -- ---- Copilot Chat
 map("n", "<leader>cc", "<cmd>CopilotChatToggle<cr>", { desc = "Toggle Copilot Chat" })
 map("v", "<leader>ce", "<cmd>CopilotChatExplain<cr>", { desc = "Explain selection" })
@@ -164,3 +183,6 @@ map("n", "<leader>ay", function()
     vim.notify("No active Claude diff found", vim.log.levels.WARN)
 end, { desc = "Accept Claude diff" })
 map("n", "<leader>an", "<cmd>ClaudeCodeDiffDeny<CR>",   { desc = "Deny Claude diff" })
+
+-- ---- OpenCode (work AI via AWS Bedrock/Ollama — installed by Ansible playbook)
+map("n", "<leader>ao", function() require("opencode").toggle() end, { desc = "Toggle OpenCode" })
