@@ -16,6 +16,20 @@ return {
         auto_save = true,    -- Always save sessions
         auto_create = true,  -- Always create a new session for the current workspace
         auto_restore = true, -- Disable restoration if --new-session is passed
+        pre_save_cmds = {
+            -- Shut down opencode and any other terminal buffers before snapshotting
+            -- the layout so they are never written into the session file.
+            function()
+                local ok, opencode = pcall(require, "opencode")
+                if ok then opencode.shutdown() end
+                -- Also sweep any remaining terminal bufs (e.g. claude-code split).
+                for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                    if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype == "terminal" then
+                        pcall(vim.api.nvim_buf_delete, buf, { force = true })
+                    end
+                end
+            end,
+        },
     } or {
         suppressed_dirs = { '~/Downloads' },
         enabled = false,

@@ -156,7 +156,40 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# 6. Nerd Font (0xProto) — used for fancy icons in nvim
+# 6. OpenCode CLI (AI-powered coding assistant)
+# ---------------------------------------------------------------------------
+header "Installing OpenCode CLI"
+# OpenCode provides AI-powered coding assistance integrated with nvim.
+# Install via official script to ~/.opencode/bin/opencode
+# Auth credentials (AWS_BEARER_TOKEN_BEDROCK) are passed via environment.
+if command -v opencode &>/dev/null; then
+    success "opencode already installed: $(opencode --version 2>/dev/null | head -1)"
+else
+    info "Installing OpenCode via official installer..."
+    curl -fsSL https://opencode.ai/install | bash -s -- --no-modify-path
+    # Add to PATH for current session
+    export PATH="$HOME/.opencode/bin:$PATH"
+    if command -v opencode &>/dev/null; then
+        success "opencode installed: $(opencode --version 2>/dev/null | head -1)"
+    else
+        warn "opencode installed but not on PATH yet — restart your shell"
+    fi
+fi
+
+# Persist OpenCode PATH in shell rc files if not already present
+for RC in "$HOME/.bashrc" "$HOME/.zshrc"; do
+    if [ -f "$RC" ] && ! grep -q 'opencode/bin' "$RC"; then
+        cat >> "$RC" <<'EOF'
+
+# OpenCode — added by nvim setup.sh
+export PATH="$HOME/.opencode/bin:$PATH"
+EOF
+        info "Added OpenCode to PATH in $RC"
+    fi
+done
+
+# ---------------------------------------------------------------------------
+# 7. Nerd Font (0xProto) — used for fancy icons in nvim
 # ---------------------------------------------------------------------------
 header "Installing 0xProto Nerd Font"
 # docs/NERD_FONT.md — without a Nerd Font installed, icons appear as ◆? diamonds.
@@ -182,7 +215,7 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# 7. vstuc dlls — only installed when --install-vstuc flag is passed
+# 8. vstuc dlls — only installed when --install-vstuc flag is passed
 # ---------------------------------------------------------------------------
 header "Unity Debugging: vstuc dlls"
 # docs/UNITY_DEBUG.md — nvim-dap Unity debugging requires two dlls from vstuc.

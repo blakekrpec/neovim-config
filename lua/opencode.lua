@@ -41,6 +41,7 @@ local function get_term()
     
     local term = Terminal:new({
         cmd = cmd,
+        id = 99,  -- avoid collision with the default :ToggleTerm terminal (ID 1)
         direction = "tab",
         hidden = true,
         env = {
@@ -91,6 +92,27 @@ end
 M.toggle = switch
 M.focus  = switch
 
+local function shutdown()
+    if not _term then return end
+    -- Close any windows showing this buffer so the tab disappears before
+    -- auto-session snapshots the layout.
+    if _term.bufnr and vim.api.nvim_buf_is_valid(_term.bufnr) then
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+            if vim.api.nvim_win_get_buf(win) == _term.bufnr then
+                pcall(vim.api.nvim_win_close, win, true)
+            end
+        end
+    end
+    pcall(function() _term:shutdown() end)
+    if _term.bufnr and vim.api.nvim_buf_is_valid(_term.bufnr) then
+        pcall(vim.api.nvim_buf_delete, _term.bufnr, { force = true })
+    end
+    _term = nil
+end
+
+-- Exposed so auto-session's pre_save_cmds can call it before snapshotting.
+M.shutdown = shutdown
+
 -- Ensure scrollback is set for terminal buffers as a safety net
 -- This catches any edge cases where the spawn override might not work
 vim.api.nvim_create_autocmd("TermOpen", {
@@ -103,34 +125,10 @@ vim.api.nvim_create_autocmd("TermOpen", {
     end,
 })
 
--- QuitPre fires when user quits, before checking if it's allowed
--- If opencode is open and we to quit, close opencode first
-vim.api.nvim_create_autocmd("QuitPre", {
-    callback = function()
-        if not _term or not _term:is_open() then return end
-        
-        -- Check if we quit from a non-opencode buffer
-        if not in_opencode() then
-            -- Close opencode silently
-            pcall(function() _term:shutdown() end)
-            if _term.bufnr and vim.api.nvim_buf_is_valid(_term.bufnr) then
-                pcall(vim.api.nvim_buf_delete, _term.bufnr, { force = true })
-            end
-        end
-    end,
-})
-
--- ExitPre fires only when nvim is truly exiting and runs before VimLeavePre,
--- so the buffer is gone before auto-session snapshots the layout.
+-- Belt-and-suspenders: also clean up on ExitPre in case auto-session's
+-- pre_save_cmds path is not exercised (e.g. forced exit).
 vim.api.nvim_create_autocmd("ExitPre", {
-    callback = function()
-        if not _term then return end
-        pcall(function() _term:shutdown() end)
-        if _term.bufnr and vim.api.nvim_buf_is_valid(_term.bufnr) then
-            pcall(vim.api.nvim_buf_delete, _term.bufnr, { force = true })
-        end
-        _term = nil
-    end,
+    callback = shutdown,
 })
 
 return M

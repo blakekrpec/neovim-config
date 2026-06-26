@@ -1,4 +1,4 @@
-vim.g.mapleader = " "
+kvim.g.mapleader = " "
 
 local builtin = require('telescope.builtin')
 
@@ -95,6 +95,16 @@ end, { desc = "Get workspace diagnostics - Trouble" })
 -- switch between cpp and header
 map("n", "<F4>", ':ClangdSwitchSourceHeader<CR>', { desc = "Switch between source/header (C++)" })
 
+-- ---- Tabs (bufferline)
+map("n", "<S-h>", "<cmd>BufferLineCyclePrev<CR>", { desc = "Prev tab" })
+map("n", "<S-l>", "<cmd>BufferLineCycleNext<CR>", { desc = "Next tab" })
+
+-- ---- Windows
+map("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
+map("n", "<C-j>", "<C-w>j", { desc = "Move to bottom window" })
+map("n", "<C-k>", "<C-w>k", { desc = "Move to top window" })
+map("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
+
 -- ---- NeoTree
 map("n", "<leader>nf", "<CMD>Neotree toggle filesystem<CR>", { desc = "Toggle NeoTree filesystem" })
 map("n", "<leader>nb", "<CMD>Neotree toggle buffers<CR>", { desc = "Toggle NeoTree buffers" })
@@ -143,13 +153,6 @@ map("n", "<leader>gx", "<cmd>DiffviewClose<CR>", { desc = "Close Diffview" })
 -- diffview: history
 map("n", "<leader>gl", "<cmd>DiffviewFileHistory %<CR>", { desc = "File git history" })
 map("n", "<leader>gL", "<cmd>DiffviewFileHistory<CR>", { desc = "Repo git history" })
-
--- ---- Copilot Chat
-map("n", "<leader>cc", "<cmd>CopilotChatToggle<cr>", { desc = "Toggle Copilot Chat" })
-map("v", "<leader>ce", "<cmd>CopilotChatExplain<cr>", { desc = "Explain selection" })
-map("v", "<leader>cr", "<cmd>CopilotChatReview<cr>", { desc = "Review selection" })
-map("v", "<leader>cf", "<cmd>CopilotChatFix<cr>", { desc = "Fix selection" })
-map("v", "<leader>co", "<cmd>CopilotChatOptimize<cr>", { desc = "Optimize selection" })
 
 -- ---- Render Markdown
 map("n", "<leader>rm", "<cmd>RenderMarkdown toggle<CR>", { desc = "Toggle markdown rendering" })
