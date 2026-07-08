@@ -1,4 +1,4 @@
-kvim.g.mapleader = " "
+vim.g.mapleader = " "
 
 local builtin = require('telescope.builtin')
 

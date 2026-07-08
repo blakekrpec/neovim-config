@@ -56,6 +56,9 @@ vim.api.nvim_create_autocmd("VimEnter", {
 })
 
 vim.filetype.add({
+    extension = {
+        tpp = "cpp",  -- C++ template implementation files
+    },
     filename = {
         ["docker-compose.yml"]  = "yaml.docker-compose",
         ["docker-compose.yaml"] = "yaml.docker-compose",

@@ -89,10 +89,10 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# 4. Node.js v22+ via nvm (required by copilot.lua)
+# 4. Node.js v22+ via nvm (required by Claude Code CLI)
 # ---------------------------------------------------------------------------
 header "Installing Node.js via nvm"
-# docs/NODEJS_COPILOT.md — copilot.lua requires Node.js v22 or newer.
+# docs/CLAUDE_CODE.md — Claude Code CLI requires Node.js v22 or newer.
 # Install via nvm so the version can be managed independently of the system.
 NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
 

@@ -65,10 +65,10 @@ if (Test-Cmd "nvim") {
 }
 
 # ---------------------------------------------------------------------------
-# 2. Node.js v22+ (required by copilot.lua)
+# 2. Node.js v22+ (required by Claude Code CLI)
 # ---------------------------------------------------------------------------
 Write-Header "Installing Node.js v22+"
-# docs/NODEJS_COPILOT.md - copilot.lua requires Node.js v22 or newer.
+# docs/CLAUDE_CODE.md - Claude Code CLI requires Node.js v22 or newer.
 $nodeOk = $false
 if (Test-Cmd "node") {
     $nodeVer = node --version 2>$null
