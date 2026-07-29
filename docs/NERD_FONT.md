@@ -5,7 +5,7 @@ Even with `nvim-web-devicons` installed, if the font used in the Gnome Terminal,
 
 #### Ubuntu
 To fix this, install a Nerd Font on the ubuntu machine:
-* Download a Nerd Font: `wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/0xProto.tar.xz` (update version as desired).
+* Download a Nerd Font: `wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/0xProto.tar.xz`.
 * Extract the font: `sudo tar -xf 0xProto.tar.xz -C /usr/share/fonts/`
 * Remove the tarball: `rm 0xProto.tar.xz`
 * Set permissions: `sudo chmod 644 /usr/share/fonts/0xProto*`
