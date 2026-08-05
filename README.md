@@ -14,29 +14,32 @@
 
 #### **Ubuntu**
 
-**Option A — Setup script (recommended)**
-
-Clone the repo first, then run the setup script. It installs Neovim, Node.js, python3-venv, unzip, and a Nerd Font in one shot:
-
-```bash
-cd ~/.config
-git clone git@github.com:blakekrpec/neovim-config.git nvim
-bash ~/.config/nvim/scripts/setup.sh
-```
-
-Pass `--install-vstuc` if you need Unity debugging support:
+Ubuntu setup is handled by the [**workstation**](https://github.com/blakekrpec/workstation)
+repo, not by this one. It installs Neovim, Node.js via nvm, Claude Code, a Nerd
+Font and the rest of the machine, then clones this repo to `~/.config/nvim`:
 
 ```bash
-bash ~/.config/nvim/scripts/setup.sh --install-vstuc
+git clone https://github.com/blakekrpec/workstation.git ~/src/workstation
+~/src/workstation/bootstrap.sh
 ```
 
-**Option B — Manual Neovim install only**
+To converge just Neovim and its dependencies:
+
+```bash
+~/src/workstation/bootstrap.sh --tags base,node,neovim
+```
+
+> **Note:** `scripts/setup.sh` used to do this and has been removed. It had grown
+> to install Node, Claude Code, OpenCode, fonts and the .NET SDK — none of which
+> is Neovim config. Unity debugging support (previously `--install-vstuc`) moves
+> to the `unity_dev` flag in the workstation repo.
+
+**Manual Neovim install only**
 
 ```bash
 curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz
-tar -xzf nvim-linux-x86_64.tar.gz
-sudo mv nvim-linux-x86_64 /usr/local/bin/
-sudo ln -s /usr/local/bin/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim
+sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+sudo ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim
 rm nvim-linux-x86_64.tar.gz
 ```
 
@@ -45,7 +48,9 @@ Verify installation:
 nvim --version
 ```
 
-> **Note:** With a manual install you'll likely need to install additional dependencies for this config (Node.js, python3-venv, unzip, Nerd Font, etc.). See the [Trouble Shooting/Notes](#trouble-shootingnotes) section below or [`scripts/setup.sh`](scripts/setup.sh) for guidance.
+> **Note:** A manual install still needs this config's other dependencies
+> (Node.js, python3-venv, unzip, ripgrep, Nerd Font). Use the workstation repo
+> unless you have a reason not to.
 
 #### **Windows**
 
@@ -77,14 +82,19 @@ powershell -ExecutionPolicy Bypass -File $env:LOCALAPPDATA\nvim\scripts\setup.ps
 
 ### **Configure Neovim**
 
-Clone this repo into `~/.config/` (Ubuntu) or `~/AppData/Local/` (Windows) as `/nvim`
-
 #### **Ubuntu**
+
+Nothing to do — the workstation repo's `neovim` role clones this repo to
+`~/.config/nvim` and keeps it up to date. Clone it by hand only if you are
+skipping the workstation repo:
+
 `cd ~/.config`
 
 `git clone git@github.com:blakekrpec/neovim-config.git nvim`
 
 #### **Windows**
+
+Clone this repo into `~/AppData/Local/` as `/nvim`
 
 `cd ~/AppData/Local/`
 

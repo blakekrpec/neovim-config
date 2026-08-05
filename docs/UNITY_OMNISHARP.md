@@ -11,11 +11,14 @@ System.InvalidOperationException: Failed to find all versions of .NET Core MSBui
 
 **Cause:** Mason installs the OmniSharp binary correctly, but OmniSharp also requires the **.NET SDK** (v8+) installed system-wide to locate MSBuild. Unity ships with its own runtime and does not install the .NET SDK globally.
 
-**Fix:** The setup scripts handle this automatically when the vstuc flag is passed — .NET SDK 8 is installed if not already present:
+**Fix:** Install the .NET SDK if it is not already present.
+
+On Linux this is the workstation repo's job — set `unity_dev: true` in
+`host_vars/<hostname>.yml` and converge:
 
 ```bash
 # Linux
-bash ~/.config/nvim/scripts/setup.sh --install-vstuc
+~/src/workstation/bootstrap.sh --tags unity
 ```
 
 ```powershell

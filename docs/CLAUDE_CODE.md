@@ -12,7 +12,9 @@ Node.js v22+ is required — see [NODEJS_COPILOT.md](NODEJS_COPILOT.md).
 npm install -g @anthropic-ai/claude-code
 ```
 
-The setup script (`scripts/setup.sh`) runs this automatically on Linux.
+On Linux the workstation repo's `claude` role does this for you
+(`~/src/workstation/bootstrap.sh --tags node,claude`). On Windows,
+`scripts/setup.ps1` handles it.
 
 ---
 
