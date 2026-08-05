@@ -1,2 +1,3 @@
-lazy-lock.json
+# lazy-lock.json is deliberately TRACKED — it pins every plugin to a commit so
+# each machine gets an identical Neovim. Commit it after :Lazy update.
 .claude/
